@@ -44,3 +44,6 @@ test:
 
 path:
 	@export PATH=$$PATH:$$HOME/go/bin;
+
+pre-commit:
+	pre-commit install

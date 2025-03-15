@@ -11,9 +11,9 @@ import (
 // This function should read a file located in $HOME/.config/scruticode/settings.toml
 // If the file is not existing, it should create it
 func ReadConfigFile() string {
-	usr, err := user.Current()
-	if err != nil {
-		log.Println(constants.ErrMessageUser, err)
+	usr, errUsr := user.Current()
+	if errUsr != nil {
+		log.Println(constants.ErrMessageUser, errUsr)
 
 		return ""
 	}
@@ -21,26 +21,26 @@ func ReadConfigFile() string {
 	filePath := usr.HomeDir + constants.ConfigFilePath
 	dirPath := filepath.Dir(filePath)
 
-	if _, err := os.Stat(filePath); os.IsNotExist(err) {
-		err := os.MkdirAll(dirPath, constants.DefaultFilePermissions)
-		if err != nil {
-			log.Println(constants.ErrMessageDirectory, err)
+	if _, errPath := os.Stat(filePath); os.IsNotExist(errPath) {
+		errCreateFolder := os.MkdirAll(dirPath, constants.DefaultFilePermissions)
+		if errCreateFolder != nil {
+			log.Println(constants.ErrMessageDirectory, errCreateFolder)
 
 			return ""
 		}
 
-		file, err := os.Create(filePath)
-		if err != nil {
-			log.Println(constants.ErrMessageFile, err)
+		file, errCreateFile := os.Create(filePath)
+		if errCreateFile != nil {
+			log.Println(constants.ErrMessageFile, errCreateFile)
 
 			return ""
 		}
 		defer file.Close()
 	}
 
-	content, err := os.ReadFile(filePath)
-	if err != nil {
-		log.Println(constants.ErrMessageReading, err)
+	content, errReadFile := os.ReadFile(filePath)
+	if errReadFile != nil {
+		log.Println(constants.ErrMessageReading, errReadFile)
 	}
 
 	return string(content)
