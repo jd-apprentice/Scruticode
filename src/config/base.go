@@ -2,7 +2,7 @@ package config
 
 import (
 	"Scruticode/src/constants"
-	"fmt"
+	"log"
 	"os"
 	"os/user"
 	"path/filepath"
@@ -13,7 +13,8 @@ import (
 func ReadConfigFile() string {
 	usr, err := user.Current()
 	if err != nil {
-		fmt.Println(constants.ErrMessageUser, err)
+		log.Println(constants.ErrMessageUser, err)
+
 		return ""
 	}
 
@@ -23,13 +24,15 @@ func ReadConfigFile() string {
 	if _, err := os.Stat(filePath); os.IsNotExist(err) {
 		err := os.MkdirAll(dirPath, constants.DefaultFilePermissions)
 		if err != nil {
-			fmt.Println(constants.ErrMessageDirectory, err)
+			log.Println(constants.ErrMessageDirectory, err)
+
 			return ""
 		}
 
 		file, err := os.Create(filePath)
 		if err != nil {
-			fmt.Println(constants.ErrMessageFile, err)
+			log.Println(constants.ErrMessageFile, err)
+
 			return ""
 		}
 		defer file.Close()
@@ -37,7 +40,8 @@ func ReadConfigFile() string {
 
 	content, err := os.ReadFile(filePath)
 	if err != nil {
-		fmt.Println(constants.ErrMessageReading, err)
+		log.Println(constants.ErrMessageReading, err)
 	}
+
 	return string(content)
 }

@@ -2,10 +2,10 @@ package main
 
 import (
 	"Scruticode/src/config"
-	"fmt"
+	"log"
 )
 
 func main() {
 	configuration := config.ReadConfigFile()
-	fmt.Print(configuration)
+	log.Print(configuration)
 }
