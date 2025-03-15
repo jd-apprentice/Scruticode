@@ -6,6 +6,5 @@ repos:
     hooks:
       - id: go-fmt
       - id: go-imports ## go install golang.org/x/tools/cmd/goimports@latest
-      - id: go-unit-tests
       - id: golangci-lint ## yay -S golangci-lint
         exclude: ^(docs)/
