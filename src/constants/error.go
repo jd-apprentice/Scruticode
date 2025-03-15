@@ -1,8 +1,9 @@
 package constants
 
 const (
-	ErrMessage          = "Error"
-	ErrMessageDirectory = ErrMessage + "creating directory"
-	ErrMessageFile      = ErrMessage + "creating file"
-	ErrMessageReading   = ErrMessage + "reading file"
+	BaseErrMessage      = "Error"
+	ErrMessageUser      = BaseErrMessage + "getting user"
+	ErrMessageDirectory = BaseErrMessage + "creating directory"
+	ErrMessageFile      = BaseErrMessage + "creating file"
+	ErrMessageReading   = BaseErrMessage + "reading file"
 )
