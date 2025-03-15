@@ -21,10 +21,10 @@ imports: path
 	goimports -w ./src
 
 lint: path
-	golangci-lint run --exclude-dirs=docs
+	golangci-lint run
 
 lint-fix: path
-	golangci-lint run --fix --exclude-dirs=docs
+	golangci-lint run --fix
 
 clear:
 	rm -rf ./bin
@@ -44,3 +44,6 @@ test:
 
 path:
 	@export PATH=$$PATH:$$HOME/go/bin;
+
+pre-commit:
+	pre-commit install

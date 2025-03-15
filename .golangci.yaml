@@ -52,16 +52,8 @@ linters-settings:
         # Entries can be a variable (starting with $), a string prefix, or an exact match (if ending with $).
         # Default: []
         allow:
-        - InfobaeAPI/src/config
-        - InfobaeAPI/src/constants
-        - InfobaeAPI/src/controllers
-        - InfobaeAPI/src/models
-        - InfobaeAPI/src/routes
-        - InfobaeAPI/docs
-        - github.com/getsentry/sentry-go
-        - github.com/gin-gonic/gin
-        - github.com/swaggo/gin-swagger
-        - github.com/swaggo/files
+        - Scruticode/src/config
+        - Scruticode/src/constants
         # List of packages that are not allowed.
         # Entries can be a variable (starting with $), a string prefix, or an exact match (if ending with $).
         # Default: []
