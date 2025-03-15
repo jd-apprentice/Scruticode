@@ -1,11 +1,11 @@
-all: lint test imports swag build start
+all: lint test imports build start
 
 ### Development
 
 start:
 	./bin/ScrutiCode
 
-dev: docs path
+dev:
 	air -c .air.toml
 
 fmt:
@@ -21,13 +21,10 @@ imports: path
 	goimports -w ./src
 
 lint: path
-	golangci-lint run --exclude-dirs=docs
+	golangci-lint run
 
 lint-fix: path
-	golangci-lint run --fix --exclude-dirs=docs
-
-docs: path
-	swag init -d src
+	golangci-lint run --fix
 
 clear:
 	rm -rf ./bin
@@ -46,4 +43,7 @@ test:
 	go test -v ./tests
 
 path:
-	export PATH=$$PATH:$$HOME/go/bin
+	@export PATH=$$PATH:$$HOME/go/bin;
+
+pre-commit:
+	pre-commit install

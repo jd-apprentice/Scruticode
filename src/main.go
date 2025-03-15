@@ -1,5 +1,11 @@
 package main
 
+import (
+	"Scruticode/src/config"
+	"log"
+)
+
 func main() {
-	println("Hello, World!")
+	configuration := config.ReadConfigFile()
+	log.Print(configuration)
 }

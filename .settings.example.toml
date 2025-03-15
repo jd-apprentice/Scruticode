@@ -1,0 +1,65 @@
+[base]
+
+### VALIDATIONS FOR THE DESIRED LANGS
+#### OPTIONS: golang, javascript, typescript, python
+#### 1 AT THE TIME
+langs = ["golang"]
+
+### VALIDATIONS FOR THE DESIRED PLATFORM
+#### OPTIONS: github, gitlab, azure devops
+#### 1 AT THE TIME
+platforms = ["github"]
+
+### 1 IS FOR SCAN MODE WHERE WE ONLY VALIDATE THINGS
+### 2 IS FOR SCAN + SUGGESTIONS
+mode = 1
+
+### VALIDATIONS FOR THINS RELATED TO DOCUMENTATION
+#### OPTIONS: readme
+[docs]
+readme = true
+
+### RELATED TO PRODUCTION ENVIRONMENTS
+#### OPTIONS: changelog, ci, cd
+[release]
+changelog = false
+ci = false
+
+### RELATED TO SECURITY OPERATIONS
+#### OPTIONS: secrets, iac, code, container, deps, sast, dast
+[security]
+secrets = false
+iac = false
+code = false
+container = false
+deps = false
+sast = false
+dast = false
+
+### MAKING SURE PROJECTS HAVE QUALITY STANDARDS
+#### OPTIONS: conventional_commits, pre_commit, linter, formatter
+[quality]
+conventional_commits = false
+pre_commit = false
+linter = false
+formatter = false
+
+### RELATED TO DIFFERENT TYPES OF TESTING
+### OPTIONS: unit, integration, e2e, coverage, stress
+[testing]
+unit = false
+integration = false
+e2e = false
+coverage = false
+stress = false
+
+### IN CASE THE APPS ARE AIMING TO BE CONTAINERIZED
+#### OPTIONS: dockerfile, docker_compose, manifestos
+[containers]
+dockerfile = false
+docker_compose = false
+
+### LANG CONFIGS
+[javascript-typescript]
+node = false
+bun = false

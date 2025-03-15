@@ -2,10 +2,8 @@
 
 repos:
   - repo: https://github.com/tekwizely/pre-commit-golang
-    rev: master
+    rev: v1.0.0-rc.1
     hooks:
       - id: go-fmt
       - id: go-imports ## go install golang.org/x/tools/cmd/goimports@latest
-      - id: go-unit-tests
       - id: golangci-lint ## yay -S golangci-lint
-        exclude: ^(docs)/
