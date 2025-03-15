@@ -7,18 +7,18 @@ import (
 )
 
 func InitSentry() {
-	config := GetConfig()
+	config, err := GetConfig()
 
-	if config.Sentry.Environment != "local" {
-		err := sentry.Init(sentry.ClientOptions{
+	if err != nil {
+		log.Fatalf("GetConfig: %s", err)
+	}
+
+	if config.Sentry.Environment == "prod" {
+		sentry.Init(sentry.ClientOptions{
 			Dsn:              config.Sentry.Dsn,
 			TracesSampleRate: config.Sentry.TracesSampleRate,
 			Release:          config.Sentry.Release,
 			Environment:      config.Sentry.Environment,
 		})
-
-		if err != nil {
-			log.Fatalf("sentry.Init: %s", err)
-		}
 	}
 }
