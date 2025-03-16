@@ -17,7 +17,6 @@ linters:
     - godot
     - gofmt
     - wsl
-    - gochecknoglobals
 
 linters-settings:
   depguard:

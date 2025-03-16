@@ -2,41 +2,18 @@ package functions
 
 import (
 	"Scruticode/src/constants"
+	"Scruticode/src/functions/options"
 	"Scruticode/src/types"
 	"log"
 	"strings"
 )
-
-var actions = map[string]types.ActionFunc{
-	"docker_compose":       func() { log.Println("action for docker_compose") },
-	"dockerfile":           func() { log.Println("action for dockerfile") },
-	"readme":               func() { log.Println("action for readme") },
-	"ci":                   func() { log.Println("action for ci") },
-	"cd":                   func() { log.Println("action for cd") },
-	"conventional_commits": func() { log.Println("action for conventional_commits") },
-	"pre_commit":           func() { log.Println("action for pre_commit") },
-	"linter":               func() { log.Println("action for linter") },
-	"formatter":            func() { log.Println("action for formatter") },
-	"unit":                 func() { log.Println("action for unit") },
-	"integration":          func() { log.Println("action for integration") },
-	"e2e":                  func() { log.Println("action for e2e") },
-	"coverage":             func() { log.Println("action for coverage") },
-	"stress":               func() { log.Println("action for stress") },
-	"secrets":              func() { log.Println("action for secrets") },
-	"iac":                  func() { log.Println("action for iac") },
-	"code":                 func() { log.Println("action for code") },
-	"container":            func() { log.Println("action for container") },
-	"deps":                 func() { log.Println("action for deps") },
-	"sast":                 func() { log.Println("action for sast") },
-	"dast":                 func() { log.Println("action for dast") },
-}
 
 func ProcessConfigFile(content string) {
 	sections := extractSections(content)
 
 	for _, section := range sections {
 		_, keyValues := parseSection(section)
-		// TODO: Check if is needed here to validate the HEADER, right now it's being ignored
+		// Check if is needed here to validate the HEADER, right now it's being ignored
 		processKeyValues(keyValues)
 	}
 }
@@ -75,6 +52,30 @@ func parseSection(section string) (string, []string) {
 }
 
 func processKeyValues(keyValues []string) {
+	var actions = map[string]types.ActionFunc{
+		"docker_compose":       func() { log.Println("action for docker_compose") },
+		"dockerfile":           func() { log.Println("action for dockerfile") },
+		"readme":               func() { log.Print(options.Readme()) },
+		"ci":                   func() { log.Println("action for ci") },
+		"cd":                   func() { log.Println("action for cd") },
+		"conventional_commits": func() { log.Println("action for conventional_commits") },
+		"pre_commit":           func() { log.Println("action for pre_commit") },
+		"linter":               func() { log.Println("action for linter") },
+		"formatter":            func() { log.Println("action for formatter") },
+		"unit":                 func() { log.Println("action for unit") },
+		"integration":          func() { log.Println("action for integration") },
+		"e2e":                  func() { log.Println("action for e2e") },
+		"coverage":             func() { log.Println("action for coverage") },
+		"stress":               func() { log.Println("action for stress") },
+		"secrets":              func() { log.Println("action for secrets") },
+		"iac":                  func() { log.Println("action for iac") },
+		"code":                 func() { log.Println("action for code") },
+		"container":            func() { log.Println("action for container") },
+		"deps":                 func() { log.Println("action for deps") },
+		"sast":                 func() { log.Println("action for sast") },
+		"dast":                 func() { log.Println("action for dast") },
+	}
+
 	for _, pair := range keyValues {
 		key, value := parseKeyValuePair(pair)
 		if key == "" {
