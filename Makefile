@@ -46,4 +46,6 @@ path:
 	@export PATH=$$PATH:$$HOME/go/bin;
 
 pre-commit:
+	pre-commit clean
 	pre-commit install
+	git add .pre-commit-config.yaml
