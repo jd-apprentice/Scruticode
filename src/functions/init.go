@@ -18,16 +18,6 @@ func InitConfigFile() {
 
 	configFile := homeDir + constants.ConfigFilePath
 	utils.IfFileNotExists(configFile, createConfigFile)
-
-	info, errFileNotExists := os.Stat(configFile)
-	if errFileNotExists != nil {
-		log.Println(errFileNotExists)
-	}
-
-	if info.Size() == constants.IsEmpty {
-		os.Remove(configFile)
-		createConfigFile(configFile)
-	}
 }
 
 func createConfigFile(configFilePath string) {
