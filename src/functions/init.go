@@ -11,17 +11,17 @@ import (
 )
 
 func InitConfigFile() {
-	homeDir, err := os.UserHomeDir()
-	if err != nil {
-		log.Fatal(err)
+	homeDir, errHomeUsr := os.UserHomeDir()
+	if errHomeUsr != nil {
+		log.Fatal(errHomeUsr)
 	}
 
 	configFile := homeDir + constants.ConfigFilePath
 	utils.IfFileNotExists(configFile, createConfigFile)
 
-	info, err := os.Stat(configFile)
-	if err != nil {
-		log.Println(err)
+	info, errFileNotExists := os.Stat(configFile)
+	if errFileNotExists != nil {
+		log.Println(errFileNotExists)
 	}
 
 	if info.Size() == constants.IsEmpty {
