@@ -1,4 +1,4 @@
-all: lint test imports build start
+all: clear lint test imports build start
 
 ### Development
 
@@ -28,6 +28,7 @@ lint-fix: path
 
 clear:
 	rm -rf ./bin
+	rm ~/.config/scruticode/settings.toml
 
 cache:
 	go clean -modcache
