@@ -1,4 +1,4 @@
-all: clear lint test imports build start
+all: lint test imports build start
 
 ### Development
 
@@ -27,17 +27,25 @@ lint-fix: path
 	golangci-lint run --fix
 
 clear:
+	if [ -d "./bin" ]; then \
+		rm -rf ./bin; \
+	fi
+
+	if [ -f "$$HOME/.config/scruticode/settings.toml" ]; then \
+		rm $$HOME/.config/scruticode/settings.toml; \
+	fi
+
+clear-bin:
 	rm -rf ./bin
-	rm ~/.config/scruticode/settings.toml
 
 cache:
 	go clean -modcache
 
 ## https://github.com/golang-standards/project-layout/issues/113#issuecomment-1336514449
-build: clear fmt
+build: clear-bin fmt
 	GOARCH=amd64 go build -o ./bin/ScrutiCode ./src/main.go
 
-build-arm: clear fmt
+build-arm: clear-bin fmt
 	GOARCH=arm64 go build -o ./bin/ScrutiCode ./src/main.go
 
 test:

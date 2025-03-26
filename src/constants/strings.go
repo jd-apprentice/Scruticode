@@ -1,5 +1,6 @@
 package constants
 
 const (
-	TrueAsString = "true"
+	TrueAsString  = "true"
+	EmptyAsString = ""
 )
