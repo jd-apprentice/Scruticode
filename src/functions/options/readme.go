@@ -10,7 +10,7 @@ import (
 func Readme() types.BaseResponse {
 	// LOGIC
 	if _, err := os.Stat(constants.ReadmeFilePath); os.IsNotExist(err) {
-		utils.LoggerError(constants.FileNotFound, constants.ReadmeFilePath)
+		utils.LoggerErrorFile(constants.FileNotFound, constants.ReadmeFilePath)
 
 		return types.BaseResponse{
 			Status: constants.QualityCheckFailed,
@@ -18,7 +18,7 @@ func Readme() types.BaseResponse {
 	}
 
 	// LOG
-	utils.LoggerDebug(constants.FileFound, constants.ReadmeFilePath)
+	utils.LoggerDebugFile(constants.FileFound, constants.ReadmeFilePath)
 
 	// RESPONSE
 	return types.BaseResponse{

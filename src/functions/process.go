@@ -3,6 +3,8 @@ package functions
 import (
 	"Scruticode/src/constants"
 	"Scruticode/src/functions/options"
+	"Scruticode/src/functions/utils"
+	"Scruticode/src/functions/validations"
 	"Scruticode/src/types"
 	"log"
 	"strings"
@@ -76,10 +78,19 @@ func processKeyValues(keyValues []string) {
 		"dast":                 func() { log.Println("action for dast") },
 	}
 
+	const emptyAsString = ""
 	for _, pair := range keyValues {
 		key, value := parseKeyValuePair(pair)
-		if key == "" {
+		if key == emptyAsString {
 			continue
+		}
+
+		keyAsString := utils.ToAbsoluteString(value)
+		keyLangOrPlatform := key == "langs" || key == "platforms"
+
+		if keyLangOrPlatform {
+			validations.ExtraLangConfig(keyAsString)
+			validations.ExtraPlatformConfig(keyAsString)
 		}
 
 		if isActionEnabled(value) {

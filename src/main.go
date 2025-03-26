@@ -9,6 +9,5 @@ import (
 func main() {
 	configuration := config.ReadConfigFile()
 	functions.ProcessConfigFile(configuration)
-	functions.InitConfigFile()
 	arguments.Generate()
 }

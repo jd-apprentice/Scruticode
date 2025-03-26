@@ -2,10 +2,10 @@ package config
 
 import (
 	"Scruticode/src/constants"
+	"Scruticode/src/functions"
 	"log"
 	"os"
 	"os/user"
-	"path/filepath"
 )
 
 // This function should read a file located in $HOME/.config/scruticode/settings.toml
@@ -19,23 +19,8 @@ func ReadConfigFile() string {
 	}
 
 	filePath := usr.HomeDir + constants.ConfigFilePath
-	dirPath := filepath.Dir(filePath)
-
 	if _, errPath := os.Stat(filePath); os.IsNotExist(errPath) {
-		errCreateFolder := os.MkdirAll(dirPath, constants.DefaultFilePermissions)
-		if errCreateFolder != nil {
-			log.Println(constants.ErrMessageDirectory, errCreateFolder)
-
-			return ""
-		}
-
-		file, errCreateFile := os.Create(filePath)
-		if errCreateFile != nil {
-			log.Println(constants.ErrMessageFile, errCreateFile)
-
-			return ""
-		}
-		defer file.Close()
+		functions.InitConfigFile()
 	}
 
 	content, errReadFile := os.ReadFile(filePath)
