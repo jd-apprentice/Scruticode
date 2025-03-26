@@ -78,16 +78,17 @@ func processKeyValues(keyValues []string) {
 		"dast":                 func() { log.Println("action for dast") },
 	}
 
+	const emptyAsString = ""
 	for _, pair := range keyValues {
 		key, value := parseKeyValuePair(pair)
-		if key == constants.EmptyAsString {
+		if key == emptyAsString {
 			continue
 		}
 
 		keyAsString := utils.ToAbsoluteString(value)
-		keyIsLangOrPlatform := key == "langs" || key == "platforms"
+		keyLangOrPlatform := key == "langs" || key == "platforms"
 
-		if keyIsLangOrPlatform {
+		if keyLangOrPlatform {
 			validations.ExtraLangConfig(keyAsString)
 			validations.ExtraPlatformConfig(keyAsString)
 		}

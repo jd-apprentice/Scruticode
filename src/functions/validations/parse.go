@@ -27,7 +27,13 @@ func langHandler(lang string) {
 			log.Println("action for python")
 		}
 	case "typescript":
+		{
+			log.Println("action for typescript")
+		}
 	case "javascript":
+		{
+			log.Println("action for javascript")
+		}
 	}
 }
 
@@ -38,7 +44,13 @@ func platformHandler(platform string) {
 			log.Println("action for github")
 		}
 	case "gitlab":
+		{
+			log.Println("action for gitlab")
+		}
 	case "azuredevops":
+		{
+			log.Println("action for azuredevops")
+		}
 	}
 }
 
