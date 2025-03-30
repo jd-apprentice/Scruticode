@@ -3,13 +3,14 @@ name: Publish
 on:
   workflow_dispatch:
   pull_request:
-    branches: [ "develop" ]
+    types: [opened, synchronize, reopened]
+    branches: [ "master" ]
     paths:
       - 'src/**'
       - '.github/workflows/publish.yml'
       - 'tests/**'
   push:
-    branches: [ "develop", "master" ]
+    branches: [ "master" ]
     paths:
       - 'src/**'
       - '.github/workflows/publish.yml'
@@ -34,4 +35,19 @@ jobs:
           go-version: 1.24.0
 
       - name: Test
-        run: go test -v ./tests
+        run: go test -cover -v ./src/...
+
+  sonarqube:
+    permissions: 
+      contents: read
+
+    name: SonarQube
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

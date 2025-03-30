@@ -2,12 +2,12 @@ package main
 
 import (
 	"Scruticode/src/config"
-	"Scruticode/src/functions"
 	"Scruticode/src/functions/arguments"
+	"Scruticode/src/functions/core"
 )
 
 func main() {
 	configuration := config.ReadConfigFile()
-	functions.ProcessConfigFile(configuration)
+	core.ProcessConfigFile(configuration)
 	arguments.Generate()
 }

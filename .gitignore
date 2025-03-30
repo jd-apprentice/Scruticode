@@ -34,3 +34,4 @@ bin/
 docker/
 infra/
 Dockerfile
+profile.cov

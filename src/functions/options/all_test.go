@@ -1,4 +1,4 @@
-package tests_test
+package options_test
 
 import (
 	"Scruticode/src/constants"
