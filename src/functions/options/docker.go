@@ -8,8 +8,7 @@ import (
 	"strings"
 )
 
-func Dockerfile() types.BaseResponse {
-	const DockerFilePath = "Dockerfile"
+func DockerfileExists() types.BaseResponse {
 	PossibleFolderPath := []string{
 		".",
 		"docker",
@@ -17,12 +16,22 @@ func Dockerfile() types.BaseResponse {
 	}
 
 	for _, folder := range PossibleFolderPath {
-		path := folder + "/" + DockerFilePath
-		if _, err := os.Stat(path); err == nil {
-			utils.LoggerDebugFile(constants.FileFound, path)
+		files, err := os.ReadDir(folder)
+		if err != nil {
+			utils.LoggerErrorFile(constants.FileNotFound, folder)
 
 			return types.BaseResponse{
-				Status: constants.QualityCheckSuccess,
+				Status: constants.QualityCheckFailed,
+			}
+		}
+
+		for _, file := range files {
+			if strings.Contains(file.Name(), "Dockerfile") {
+				utils.LoggerDebugFile(constants.FileFound, file.Name())
+
+				return types.BaseResponse{
+					Status: constants.QualityCheckSuccess,
+				}
 			}
 		}
 	}

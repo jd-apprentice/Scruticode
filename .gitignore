@@ -32,4 +32,5 @@ bin/
 
 ## Example
 docker/
+infra/
 Dockerfile
