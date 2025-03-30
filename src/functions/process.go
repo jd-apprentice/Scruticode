@@ -56,7 +56,7 @@ func parseSection(section string) (string, []string) {
 func processKeyValues(keyValues []string) {
 	var actions = map[string]types.ActionFunc{
 		"docker_compose":       func() { log.Println("action for docker_compose") },
-		"dockerfile":           func() { log.Println("action for dockerfile") },
+		"dockerfile":           func() { log.Println(options.Dockerfile()) },
 		"readme":               func() { log.Print(options.Readme()) },
 		"ci":                   func() { log.Println("action for ci") },
 		"cd":                   func() { log.Println("action for cd") },
