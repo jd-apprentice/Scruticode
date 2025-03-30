@@ -1,4 +1,4 @@
-package functions
+package core
 
 import (
 	"Scruticode/src/constants"
@@ -11,20 +11,20 @@ import (
 )
 
 func ProcessConfigFile(content string) {
-	sections := extractSections(content)
+	sections := ExtractSections(content)
 
 	for _, section := range sections {
-		_, keyValues := parseSection(section)
+		_, keyValues := ParseSection(section)
 		// Check if is needed here to validate the HEADER, right now it's being ignored
 		processKeyValues(keyValues)
 	}
 }
 
-func extractSections(content string) []string {
+func ExtractSections(content string) []string {
 	return strings.Split(content, "\n\n")
 }
 
-func parseSection(section string) (string, []string) {
+func ParseSection(section string) (string, []string) {
 	lines := strings.Split(section, "\n")
 	if len(lines) == 0 {
 		return "", nil
@@ -35,11 +35,11 @@ func parseSection(section string) (string, []string) {
 
 	for index, line := range lines {
 		trimmedLine := strings.TrimSpace(line)
-		if trimmedLine == "" || isComment(trimmedLine) {
+		if trimmedLine == "" || IsComment(trimmedLine) {
 			continue
 		}
 
-		if index == constants.IsEmpty && isSectionHeader(trimmedLine) {
+		if index == constants.IsEmpty && IsSectionHeader(trimmedLine) {
 			header = trimmedLine
 
 			continue
@@ -56,7 +56,7 @@ func parseSection(section string) (string, []string) {
 func processKeyValues(keyValues []string) {
 	var actions = map[string]types.ActionFunc{
 		"docker_compose":       func() { log.Println("action for docker_compose") },
-		"dockerfile":           func() { log.Println("action for dockerfile") },
+		"dockerfile":           func() { log.Print(options.DockerfileExists()) },
 		"readme":               func() { log.Print(options.Readme()) },
 		"ci":                   func() { log.Println("action for ci") },
 		"cd":                   func() { log.Println("action for cd") },
@@ -80,7 +80,7 @@ func processKeyValues(keyValues []string) {
 
 	const emptyAsString = ""
 	for _, pair := range keyValues {
-		key, value := parseKeyValuePair(pair)
+		key, value := ParseKeyValuePair(pair)
 		if key == emptyAsString {
 			continue
 		}
@@ -93,7 +93,7 @@ func processKeyValues(keyValues []string) {
 			validations.ExtraPlatformConfig(keyAsString)
 		}
 
-		if isActionEnabled(value) {
+		if IsActionEnabled(value) {
 			action, exists := actions[key]
 			if !exists {
 				log.Printf("No action found for key '%s'\n", key)
@@ -105,19 +105,19 @@ func processKeyValues(keyValues []string) {
 	}
 }
 
-func isSectionHeader(line string) bool {
+func IsSectionHeader(line string) bool {
 	return strings.HasPrefix(line, "[") && strings.HasSuffix(line, "]")
 }
 
-func isComment(line string) bool {
+func IsComment(line string) bool {
 	return strings.HasPrefix(strings.TrimSpace(line), "#")
 }
 
-func isActionEnabled(action string) bool {
-	return strings.ToLower(action) == constants.TrueAsString
+func IsActionEnabled(action string) bool {
+	return strings.ToLower(action) == "true"
 }
 
-func parseKeyValuePair(pair string) (string, string) {
+func ParseKeyValuePair(pair string) (string, string) {
 	parts := strings.SplitN(pair, "=", constants.IsKeyVal)
 	if len(parts) != constants.IsKeyVal {
 		return "", ""
