@@ -1,8 +1,7 @@
-package config
+package functions
 
 import (
-	"Scruticode/src/constants"
-	"Scruticode/src/functions/core"
+	"Scruticode/src/shared/constants"
 	"log"
 	"os"
 	"os/user"
@@ -20,7 +19,7 @@ func ReadConfigFile() string {
 
 	filePath := usr.HomeDir + constants.ConfigFilePath
 	if _, errPath := os.Stat(filePath); os.IsNotExist(errPath) {
-		core.InitConfigFile()
+		InitConfigFile()
 	}
 
 	content, errReadFile := os.ReadFile(filePath)

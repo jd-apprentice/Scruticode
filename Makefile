@@ -9,22 +9,20 @@ dev:
 	air -c .air.toml
 
 fmt:
-	@if [ -n "$$(go fmt ./src)" ]; then \
+	@if [ -n "$$(go fmt ./...)" ]; then \
         echo "Code is not properly formatted"; \
         exit 1; \
     fi
 
 fmt-fix:
-	go fmt ./src
+	go fmt ./...
 
 imports: path
 	goimports -w ./src
 
 lint: path
-	golangci-lint run
-
-lint-fix: path
-	golangci-lint run --fix
+	pre-commit clean
+	pre-commit run
 
 clear:
 	if [ -d "./bin" ]; then \

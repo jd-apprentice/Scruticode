@@ -1,4 +1,4 @@
-package arguments
+package functions
 
 import (
 	"flag"

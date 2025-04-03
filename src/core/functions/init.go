@@ -1,8 +1,8 @@
-package core
+package functions
 
 import (
-	"Scruticode/src/constants"
-	"Scruticode/src/functions/utils"
+	"Scruticode/src/shared/constants"
+	"Scruticode/src/shared/utils"
 	"context"
 	"io"
 	"log"
