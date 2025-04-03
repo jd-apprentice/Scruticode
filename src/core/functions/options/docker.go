@@ -1,9 +1,9 @@
 package options
 
 import (
-	"Scruticode/src/constants"
-	"Scruticode/src/functions/utils"
-	"Scruticode/src/types"
+	"Scruticode/src/core/types"
+	"Scruticode/src/shared/constants"
+	"Scruticode/src/shared/utils"
 	"os"
 	"strings"
 )

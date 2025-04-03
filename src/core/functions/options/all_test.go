@@ -1,8 +1,8 @@
 package options_test
 
 import (
-	"Scruticode/src/constants"
-	"Scruticode/src/functions/options"
+	"Scruticode/src/core/functions/options"
+	"Scruticode/src/shared/constants"
 	"log"
 	"os"
 	"testing"
@@ -66,6 +66,7 @@ func TestDockerfileExistsInDockerFolder(t *testing.T) {
 	t.Parallel()
 
 	const dockerFolder = "docker"
+
 	const infraFolder = "infra"
 
 	errDockerFolder := os.Mkdir(dockerFolder, 0755)

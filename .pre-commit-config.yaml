@@ -6,4 +6,4 @@ repos:
     hooks:
       - id: go-imports ## go install golang.org/x/tools/cmd/goimports@latest
       - id: golangci-lint ## yay -S golangci-lint
-        args: ["--fix"]
+        args: ["--config=.golangci.yaml"]
