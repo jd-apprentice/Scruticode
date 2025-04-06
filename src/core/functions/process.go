@@ -1,30 +1,29 @@
-package core
+package functions
 
 import (
-	"Scruticode/src/constants"
-	"Scruticode/src/functions/options"
-	"Scruticode/src/functions/utils"
-	"Scruticode/src/functions/validations"
-	"Scruticode/src/types"
+	"Scruticode/src/shared/constants"
+	"Scruticode/src/shared/utils"
 	"log"
 	"strings"
 )
 
+type ActionFunc func()
+
 func ProcessConfigFile(content string) {
-	sections := ExtractSections(content)
+	sections := extractSections(content)
 
 	for _, section := range sections {
-		_, keyValues := ParseSection(section)
+		_, keyValues := parseSection(section)
 		// Check if is needed here to validate the HEADER, right now it's being ignored
 		processKeyValues(keyValues)
 	}
 }
 
-func ExtractSections(content string) []string {
+func extractSections(content string) []string {
 	return strings.Split(content, "\n\n")
 }
 
-func ParseSection(section string) (string, []string) {
+func parseSection(section string) (string, []string) {
 	lines := strings.Split(section, "\n")
 	if len(lines) == 0 {
 		return "", nil
@@ -35,11 +34,11 @@ func ParseSection(section string) (string, []string) {
 
 	for index, line := range lines {
 		trimmedLine := strings.TrimSpace(line)
-		if trimmedLine == "" || IsComment(trimmedLine) {
+		if trimmedLine == "" || isComment(trimmedLine) {
 			continue
 		}
 
-		if index == constants.IsEmpty && IsSectionHeader(trimmedLine) {
+		if index == constants.IsEmpty && isSectionHeader(trimmedLine) {
 			header = trimmedLine
 
 			continue
@@ -54,10 +53,10 @@ func ParseSection(section string) (string, []string) {
 }
 
 func processKeyValues(keyValues []string) {
-	var actions = map[string]types.ActionFunc{
+	var actions = map[string]ActionFunc{
 		"docker_compose":       func() { log.Println("action for docker_compose") },
-		"dockerfile":           func() { log.Print(options.DockerfileExists()) },
-		"readme":               func() { log.Print(options.Readme()) },
+		"dockerfile":           func() { log.Print(DockerfileExists()) },
+		"readme":               func() { log.Print(Readme(constants.ReadmeFilePath)) },
 		"ci":                   func() { log.Println("action for ci") },
 		"cd":                   func() { log.Println("action for cd") },
 		"conventional_commits": func() { log.Println("action for conventional_commits") },
@@ -80,7 +79,7 @@ func processKeyValues(keyValues []string) {
 
 	const emptyAsString = ""
 	for _, pair := range keyValues {
-		key, value := ParseKeyValuePair(pair)
+		key, value := parseKeyValuePair(pair)
 		if key == emptyAsString {
 			continue
 		}
@@ -89,11 +88,11 @@ func processKeyValues(keyValues []string) {
 		keyLangOrPlatform := key == "langs" || key == "platforms"
 
 		if keyLangOrPlatform {
-			validations.ExtraLangConfig(keyAsString)
-			validations.ExtraPlatformConfig(keyAsString)
+			extraLangConfig(keyAsString)
+			extraPlatformConfig(keyAsString)
 		}
 
-		if IsActionEnabled(value) {
+		if isActionEnabled(value) {
 			action, exists := actions[key]
 			if !exists {
 				log.Printf("No action found for key '%s'\n", key)
@@ -105,19 +104,19 @@ func processKeyValues(keyValues []string) {
 	}
 }
 
-func IsSectionHeader(line string) bool {
+func isSectionHeader(line string) bool {
 	return strings.HasPrefix(line, "[") && strings.HasSuffix(line, "]")
 }
 
-func IsComment(line string) bool {
+func isComment(line string) bool {
 	return strings.HasPrefix(strings.TrimSpace(line), "#")
 }
 
-func IsActionEnabled(action string) bool {
+func isActionEnabled(action string) bool {
 	return strings.ToLower(action) == "true"
 }
 
-func ParseKeyValuePair(pair string) (string, string) {
+func parseKeyValuePair(pair string) (string, string) {
 	parts := strings.SplitN(pair, "=", constants.IsKeyVal)
 	if len(parts) != constants.IsKeyVal {
 		return "", ""

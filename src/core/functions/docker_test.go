@@ -1,8 +1,7 @@
-package options_test
+package functions
 
 import (
-	"Scruticode/src/constants"
-	"Scruticode/src/functions/options"
+	"Scruticode/src/shared/constants"
 	"log"
 	"os"
 	"testing"
@@ -56,7 +55,7 @@ func TestDockerfileExistsInRoot(t *testing.T) {
 	createTempDockerfile(t, path)
 	defer removeTempDockerfile(t, path)
 
-	result := options.DockerfileExists()
+	result := DockerfileExists()
 	if result.Status != constants.QualityCheckSuccess {
 		t.Errorf(errMessage, constants.QualityCheckSuccess, result.Status)
 	}
@@ -66,6 +65,7 @@ func TestDockerfileExistsInDockerFolder(t *testing.T) {
 	t.Parallel()
 
 	const dockerFolder = "docker"
+
 	const infraFolder = "infra"
 
 	errDockerFolder := os.Mkdir(dockerFolder, 0755)
@@ -84,7 +84,7 @@ func TestDockerfileExistsInDockerFolder(t *testing.T) {
 	defer removeTempFolder(t, dockerFolder)
 	defer removeTempFolder(t, infraFolder)
 
-	result := options.DockerfileExists()
+	result := DockerfileExists()
 	if result.Status != constants.QualityCheckSuccess {
 		t.Errorf(errMessage, constants.QualityCheckSuccess, result.Status)
 	}

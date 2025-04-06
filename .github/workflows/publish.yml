@@ -35,7 +35,7 @@ jobs:
           go-version: 1.24.0
 
       - name: Test
-        run: go test -cover -v ./src/...
+        run: go test -cover ./src/...
 
   # sonarqube:
   #   permissions: 

@@ -1,4 +1,4 @@
-package validations
+package functions
 
 import (
 	"log"
@@ -54,12 +54,12 @@ func platformHandler(platform string) {
 	}
 }
 
-func ExtraLangConfig(lang string) {
+func extraLangConfig(lang string) {
 	var supportedLanguages = []string{"golang", "typescript", "javascript", "python"}
 	extraConfig(lang, supportedLanguages, langHandler)
 }
 
-func ExtraPlatformConfig(platform string) {
+func extraPlatformConfig(platform string) {
 	var supportedPlatforms = []string{"github", "gitlab", "azuredevops"}
 	extraConfig(platform, supportedPlatforms, platformHandler)
 }

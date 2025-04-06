@@ -1,4 +1,4 @@
-package arguments
+package functions
 
 import (
 	"flag"
@@ -6,7 +6,7 @@ import (
 )
 
 // https://gobyexample.com/command-line-flags
-func Generate() {
+func GenerateArguments() {
 	lang := flag.String("languages", "golang", "Supported languages [golang, typescript, javascript, python].")
 	platform := flag.String("platforms", "github", "Supported platforms [github, gitlab, azuredevops]")
 	flag.Parse()
