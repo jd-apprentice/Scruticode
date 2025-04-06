@@ -5,5 +5,5 @@ import "Scruticode/src/core/functions"
 func main() {
 	configuration := functions.ReadConfigFile()
 	functions.ProcessConfigFile(configuration)
-	functions.Generate()
+	functions.GenerateArguments()
 }

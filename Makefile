@@ -47,10 +47,7 @@ build-arm: clear-bin fmt
 	GOARCH=arm64 go build -o ./bin/ScrutiCode ./src/main.go
 
 test:
-	go test -cover -v ./src/...
-
-cover: test
-	go tool cover -func profile.cov
+	go test -cover ./src/...
 
 path:
 	@export PATH=$$PATH:$$HOME/go/bin;

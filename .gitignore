@@ -35,3 +35,4 @@ docker/
 infra/
 Dockerfile
 profile.cov
+existing_file.txt

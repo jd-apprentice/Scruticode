@@ -1,9 +1,9 @@
-package options
+package functions
 
 import (
 	"Scruticode/src/core/types"
 	"Scruticode/src/shared/constants"
-	"Scruticode/src/shared/utils"
+	"log"
 	"os"
 	"strings"
 )
@@ -18,7 +18,7 @@ func DockerfileExists() types.BaseResponse {
 	for _, folder := range PossibleFolderPath {
 		files, err := os.ReadDir(folder)
 		if err != nil {
-			utils.LoggerErrorFile(constants.FileNotFound, folder)
+			log.Fatalf("%s: %s\n", constants.FileNotFound, folder)
 
 			return types.BaseResponse{
 				Status: constants.QualityCheckFailed,
@@ -27,7 +27,7 @@ func DockerfileExists() types.BaseResponse {
 
 		for _, file := range files {
 			if strings.Contains(file.Name(), "Dockerfile") {
-				utils.LoggerDebugFile(constants.FileFound, file.Name())
+				log.Printf("%s: %s\n", constants.FileFound, file.Name())
 
 				return types.BaseResponse{
 					Status: constants.QualityCheckSuccess,
@@ -36,7 +36,7 @@ func DockerfileExists() types.BaseResponse {
 		}
 	}
 
-	utils.LoggerErrorFile(constants.FileNotFound, strings.Join(PossibleFolderPath, ", "))
+	log.Fatalf("%s: %s\n", constants.FileNotFound, strings.Join(PossibleFolderPath, ", "))
 
 	return types.BaseResponse{
 		Status: constants.QualityCheckFailed,
