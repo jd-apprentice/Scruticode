@@ -1,4 +1,4 @@
-all: lint test imports build start
+all: lint test imports fmt build start
 
 ### Development
 
@@ -24,6 +24,10 @@ lint: path
 	pre-commit clean
 	pre-commit run
 
+## https://golangci-lint.run/product/migration-guide
+lint-migrate:
+	golangci-lint migrate
+
 clear:
 	if [ -d "./bin" ]; then \
 		rm -rf ./bin; \
@@ -47,7 +51,11 @@ build-arm: clear-bin fmt
 	GOARCH=arm64 go build -o ./bin/ScrutiCode ./src/main.go
 
 test:
-	go test -cover ./src/...
+	go test ./src/...
+
+test-coverage:
+	go test -coverprofile=coverage.out ./src/...
+	go tool cover -html=coverage.out -o coverage.html
 
 path:
 	@export PATH=$$PATH:$$HOME/go/bin;
