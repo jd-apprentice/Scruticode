@@ -76,8 +76,8 @@ func readAndParsePackageJSON(path string) (map[string]interface{}, error) {
 }
 
 func hasDependency(packageJSON map[string]interface{}, dependency string) bool {
-	dependencies, ok := packageJSON["dependencies"].(map[string]interface{})
-	if !ok {
+	dependencies, found := packageJSON["dependencies"].(map[string]interface{})
+	if !found {
 		return false
 	}
 	_, exists := dependencies[dependency]
@@ -86,8 +86,8 @@ func hasDependency(packageJSON map[string]interface{}, dependency string) bool {
 }
 
 func hasScript(packageJSON map[string]interface{}, script string) bool {
-	scripts, ok := packageJSON["scripts"].(map[string]interface{})
-	if !ok {
+	scripts, found := packageJSON["scripts"].(map[string]interface{})
+	if !found {
 		return false
 	}
 	_, exists := scripts[script]
