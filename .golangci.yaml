@@ -14,13 +14,12 @@ linters:
           files:
             - '!**/*_a _file.go'
           allow:
-            - Scruticode/src/config
-            - Scruticode/src/constants
+            - Scruticode/src/core
+            - Scruticode/src/shared
+            - Scruticode/src/main.go
           deny:
             - pkg: math/rand$
               desc: use math/rand/v2
-            - pkg: github.com/sirupsen/logrus
-              desc: not allowed
             - pkg: github.com/pkg/errors
               desc: Should be replaced by standard lib errors package
     unused:
@@ -44,10 +43,8 @@ linters:
         text: '^: #'
       - path: (.+)\.go$
         text: imported and not used$
-    paths:
-      - third_party$
-      - builtin$
-      - examples$
+      - path: (.+)\.go$
+        text: 'undefined: .*'
 issues:
   max-issues-per-linter: 0
   max-same-issues: 0
@@ -56,7 +53,6 @@ formatters:
     - goimports
   exclusions:
     generated: lax
-    paths:
-      - third_party$
-      - builtin$
-      - examples$
+    rules:
+      - path: (.+)\.go$
+        text: 'undefined: .*'

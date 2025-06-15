@@ -13,6 +13,7 @@ func DockerfileExists() types.BaseResponse {
 		".",
 		"docker",
 		"infra",
+		"mocks",
 	}
 
 	const fatalMessage = "%s: %s\n"
