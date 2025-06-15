@@ -42,10 +42,11 @@ jobs:
         with:
           python-version: '3.13' 
 
-      - name: Install Packages with Pip
-        uses: parafoxia/pip-install@v1.0.0
-        with:
-          packages: pre-commit
+      - name: Install Pip
+        run: python -m ensurepip --upgrade
+
+      - name: Install pre-commit
+        run: pip install pre-commit
       
       - name: Run make lint
         run: make lint
