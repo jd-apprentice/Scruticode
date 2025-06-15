@@ -89,10 +89,3 @@ func TestDockerfileExistsInDockerFolder(t *testing.T) {
 		t.Errorf(errMessage, constants.QualityCheckSuccess, result.Status)
 	}
 }
-
-func TestDockerfileNotFound(t *testing.T) {
-	t.Parallel()
-	t.SkipNow()
-
-	// WIP
-}

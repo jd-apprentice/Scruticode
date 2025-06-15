@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [ "master" ]
+    paths:
+      - 'src/**'
+      - '.github/workflows/ci.yml'
+  push:
+    branches: [ "master" ]
+    paths:
+      - 'src/**'
+      - '.github/workflows/ci.yml'
+
+jobs:
+  build:
+    permissions: 
+      contents: read
+
+    name: Lint and Build
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@85e6279cec87321a52edac9c87bce653a07cf6c2
+
+      - name: Set up Go
+        uses: actions/setup-go@5a083d0e9a84784eb32078397cf5459adecb4c40
+        with:
+          go-version: 1.24.0
+
+      - name: Install golangci-lint
+        run: curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/HEAD/install.sh | sh -s -- -b $(go env GOPATH)/bin v2.1.6
+
+      - name: Install go imports
+        run: go install golang.org/x/tools/cmd/goimports@latest
+
+      - name: Install python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13' 
+
+      - name: Install Pip
+        run: python -m ensurepip --upgrade
+
+      - name: Install pre-commit
+        run: pip install pre-commit
+      
+      - name: Run make lint
+        run: make lint
+
+      - name: Run make fmt
+        run: make fmt
+
+      - name: Run make imports
+        run: make imports
+
+      - name: Run make build
+        run: make build

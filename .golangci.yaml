@@ -1,93 +1,58 @@
-# yaml-language-server: $schema=https://golangci-lint.run/jsonschema/golangci.jsonschema.json
-## Copied from https://github.com/microsoft/typescript-go
-### https://golangci-lint.run/usage/linters/
-
+version: "2"
 run:
   allow-parallel-runners: true
-  timeout: 180s
-
 linters:
-  enable-all: true
+  default: all
   disable:
-    - tenv
     - godox
-    - gci
-    - gofumpt
-    - gofmt
     - wsl
-    - typecheck
-
-linters-settings:
-  unused:
-    # Mark all struct fields that have been written to as used.
-    # Default: true
-    field-writes-are-uses: false
-    # Treat IncDec statement (e.g. `i++` or `i--`) as both read and write operation instead of just write.
-    # Default: false
-    post-statements-are-reads: true
-    # Mark all exported fields as used.
-    # default: true
-    exported-fields-are-used: false
-    # Mark all function parameters as used.
-    # default: true
-    parameters-are-used: false
-    # Mark all local variables as used.
-    # default: true
-    local-variables-are-used: false
-    # Mark all identifiers inside generated files as used.
-    # Default: true
-    generated-is-used: false
-  depguard:
-    # Rules to apply.
-    #
-    # Variables:
-    # - File Variables
-    #   Use an exclamation mark `!` to negate a variable.
-    #   Example: `!$test` matches any file that is not a go test file.
-    #
-    #   `$all` - matches all go files
-    #   `$test` - matches all go test files
-    #
-    # - Package Variables
-    #
-    #   `$gostd` - matches all of go's standard library (Pulled from `GOROOT`)
-    #
-    # Default (applies if no custom rules are defined): Only allow $gostd in all files.
+  settings:
+    depguard:
+      rules:
+        main:
+          list-mode: lax
+          files:
+            - '!**/*_a _file.go'
+          allow:
+            - Scruticode/src/core
+            - Scruticode/src/shared
+            - Scruticode/src/main.go
+          deny:
+            - pkg: math/rand$
+              desc: use math/rand/v2
+            - pkg: github.com/pkg/errors
+              desc: Should be replaced by standard lib errors package
+    unused:
+      field-writes-are-uses: false
+      post-statements-are-reads: true
+      exported-fields-are-used: false
+      parameters-are-used: false
+      local-variables-are-used: false
+      generated-is-used: false
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
     rules:
-      # Name of a rule.
-      main:
-        # Defines package matching behavior. Available modes:
-        # - `original`: allowed if it doesn't match the deny list and either matches the allow list or the allow list is empty.
-        # - `strict`: allowed only if it matches the allow list and either doesn't match the deny list or the allow rule is more specific (longer) than the deny rule.
-        # - `lax`: allowed if it doesn't match the deny list or the allow rule is more specific (longer) than the deny rule.
-        # Default: "original"
-        list-mode: lax
-        # List of file globs that will match this list of settings to compare against.
-        # Default: $all
-        files:
-          - "!**/*_a _file.go"
-        # List of allowed packages.
-        # Entries can be a variable (starting with $), a string prefix, or an exact match (if ending with $).
-        # Default: []
-        allow:
-        - Scruticode/src/config
-        - Scruticode/src/constants
-        # List of packages that are not allowed.
-        # Entries can be a variable (starting with $), a string prefix, or an exact match (if ending with $).
-        # Default: []
-        deny:
-          - pkg: "math/rand$"
-            desc: use math/rand/v2
-          - pkg: "github.com/sirupsen/logrus"
-            desc: not allowed
-          - pkg: "github.com/pkg/errors"
-            desc: Should be replaced by standard lib errors package
-
+      - path: (.+)\.go$
+        text: ^could not import
+      - path: (.+)\.go$
+        text: '^: #'
+      - path: (.+)\.go$
+        text: imported and not used$
+      - path: (.+)\.go$
+        text: 'undefined: .*'
 issues:
   max-issues-per-linter: 0
   max-same-issues: 0
-
-  exclude:
-    - '^could not import'
-    - '^: #'
-    - 'imported and not used$'
+formatters:
+  enable:
+    - goimports
+  exclusions:
+    generated: lax
+    rules:
+      - path: (.+)\.go$
+        text: 'undefined: .*'

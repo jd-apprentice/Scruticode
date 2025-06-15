@@ -35,4 +35,5 @@ docker/
 infra/
 Dockerfile
 profile.cov
-existing_file.txt
+mocks/
+.golangci.bck.yaml

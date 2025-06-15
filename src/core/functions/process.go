@@ -61,7 +61,7 @@ func processKeyValues(keyValues []string) {
 		"cd":                   func() { log.Println("action for cd") },
 		"conventional_commits": func() { log.Println("action for conventional_commits") },
 		"pre_commit":           func() { log.Println("action for pre_commit") },
-		"linter":               func() { log.Println("action for linter") },
+		"linter":               func() { log.Println(LinterJavascriptExists("mocks")) }, // TODO: Update with parameter path
 		"formatter":            func() { log.Println("action for formatter") },
 		"unit":                 func() { log.Println("action for unit") },
 		"integration":          func() { log.Println("action for integration") },
