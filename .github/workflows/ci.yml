@@ -14,7 +14,6 @@ on:
       - '.github/workflows/ci.yml'
 
 jobs:
-
   build:
     permissions: 
       contents: read
