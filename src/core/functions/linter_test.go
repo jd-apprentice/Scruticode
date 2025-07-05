@@ -8,6 +8,9 @@ import (
 )
 
 func TestLinterJavascriptExists(t *testing.T) {
+
+	const packageFile = "package.json"
+
 	tmpDir, err := os.MkdirTemp("", "test-linter")
 	if err != nil {
 		t.Fatalf("Failed to create temp dir: %v", err)

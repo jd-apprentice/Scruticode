@@ -9,6 +9,9 @@ import (
 )
 
 func TestInitConfigFile(t *testing.T) {
+
+	const fileName = "settings.toml"
+
 	tmpDir, err := os.MkdirTemp("", "test-init")
 	if err != nil {
 		t.Fatalf("Failed to create temp dir: %v", err)
@@ -27,7 +30,7 @@ func TestInitConfigFile(t *testing.T) {
 		if err := os.MkdirAll(configDir, 0755); err != nil {
 			t.Fatalf("Failed to create config dir: %v", err)
 		}
-		configFilePath := filepath.Join(configDir, "settings.toml")
+		configFilePath := filepath.Join(configDir, fileName)
 		if _, err := os.Create(configFilePath); err != nil {
 			t.Fatalf("Failed to create config file: %v", err)
 		}
@@ -36,7 +39,7 @@ func TestInitConfigFile(t *testing.T) {
 	})
 
 	t.Run("config file does not exist", func(t *testing.T) {
-		configFilePath := filepath.Join(tmpDir, ".config", "scruticode", "settings.toml")
+		configFilePath := filepath.Join(tmpDir, ".config", "scruticode", fileName)
 		os.Remove(configFilePath)
 
 		server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -65,7 +68,7 @@ func TestCreateConfigFile(t *testing.T) {
 	defer os.RemoveAll(tmpDir)
 
 	t.Run("successful creation", func(t *testing.T) {
-		configFilePath := filepath.Join(tmpDir, "settings.toml")
+		configFilePath := filepath.Join(tmpDir, fileName)
 
 		server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusOK)
@@ -94,7 +97,7 @@ func TestCreateConfigFile(t *testing.T) {
 	})
 
 	t.Run("http request fails", func(t *testing.T) {
-		configFilePath := filepath.Join(tmpDir, "settings.toml")
+		configFilePath := filepath.Join(tmpDir, fileName)
 
 		originalURL := exampleConfigURL
 		exampleConfigURL = "http://invalid-url"
