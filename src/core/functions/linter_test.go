@@ -26,7 +26,7 @@ func TestLinterJavascriptExists(t *testing.T) {
 				"lint": "eslint ."
 			}
 		}`
-		packageJSONPath := filepath.Join(tmpDir, "package.json")
+		packageJSONPath := filepath.Join(tmpDir, packageFile)
 		if err := os.WriteFile(packageJSONPath, []byte(packageJSONContent), 0644); err != nil {
 			t.Fatalf("Failed to write package.json: %v", err)
 		}
@@ -44,7 +44,7 @@ func TestLinterJavascriptExists(t *testing.T) {
 				"lint": "eslint ."
 			}
 		}`
-		packageJSONPath := filepath.Join(tmpDir, "package.json")
+		packageJSONPath := filepath.Join(tmpDir, packageFile)
 		if err := os.WriteFile(packageJSONPath, []byte(packageJSONContent), 0644); err != nil {
 			t.Fatalf("Failed to write package.json: %v", err)
 		}
@@ -62,7 +62,7 @@ func TestLinterJavascriptExists(t *testing.T) {
 			},
 			"scripts": {}
 		}`
-		packageJSONPath := filepath.Join(tmpDir, "package.json")
+		packageJSONPath := filepath.Join(tmpDir, packageFile)
 		if err := os.WriteFile(packageJSONPath, []byte(packageJSONContent), 0644); err != nil {
 			t.Fatalf("Failed to write package.json: %v", err)
 		}
@@ -82,7 +82,7 @@ func TestLinterJavascriptExists(t *testing.T) {
 				"lint": "eslint ."
 			},
 		}`
-		packageJSONPath := filepath.Join(tmpDir, "package.json")
+		packageJSONPath := filepath.Join(tmpDir, packageFile)
 		if err := os.WriteFile(packageJSONPath, []byte(packageJSONContent), 0644); err != nil {
 			t.Fatalf("Failed to write package.json: %v", err)
 		}
@@ -94,7 +94,7 @@ func TestLinterJavascriptExists(t *testing.T) {
 	})
 
 	t.Run("missing package.json", func(t *testing.T) {
-		os.Remove(filepath.Join(tmpDir, "package.json"))
+		os.Remove(filepath.Join(tmpDir, packageFile))
 		response := LinterJavascriptExists(tmpDir)
 		if response.Status != constants.QualityCheckFailed {
 			t.Errorf("Expected status %d, got %d", constants.QualityCheckFailed, response.Status)
@@ -209,7 +209,7 @@ func TestReadAndParsePackageJSON(t *testing.T) {
 
 	t.Run("valid package.json", func(t *testing.T) {
 		content := `{"name": "test-project", "version": "1.0.0"}`
-		path := filepath.Join(tmpDir, "package.json")
+		path := filepath.Join(tmpDir, packageFile)
 		if err := os.WriteFile(path, []byte(content), 0644); err != nil {
 			t.Fatalf("Failed to write package.json: %v", err)
 		}
@@ -225,7 +225,7 @@ func TestReadAndParsePackageJSON(t *testing.T) {
 
 	t.Run("invalid package.json", func(t *testing.T) {
 		content := `{"name": "test-project", "version": "1.0.0",}`
-		path := filepath.Join(tmpDir, "package.json")
+		path := filepath.Join(tmpDir, packageFile)
 		if err := os.WriteFile(path, []byte(content), 0644); err != nil {
 			t.Fatalf("Failed to write package.json: %v", err)
 		}
