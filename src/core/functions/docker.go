@@ -10,6 +10,7 @@ import (
 
 func DockerfileExists(folder string) types.BaseResponse {
 	const fatalMessage = "%s: %s\n"
+	const dockerfile = "Dockerfile"
 
 	files, err := os.ReadDir(folder)
 	if err != nil {
@@ -17,7 +18,7 @@ func DockerfileExists(folder string) types.BaseResponse {
 	}
 
 	for _, file := range files {
-		if strings.Contains(file.Name(), "Dockerfile") {
+		if strings.Contains(file.Name(), dockerfile) {
 			log.Printf(fatalMessage, constants.FileFound, file.Name())
 
 			return types.BaseResponse{
@@ -26,7 +27,7 @@ func DockerfileExists(folder string) types.BaseResponse {
 		}
 	}
 
-	log.Fatalf(fatalMessage, constants.FileNotFound, folder)
+	log.Fatalf(fatalMessage, constants.FileNotFound, folder+"/"+dockerfile)
 
 	return types.BaseResponse{
 		Status: constants.QualityCheckFailed,

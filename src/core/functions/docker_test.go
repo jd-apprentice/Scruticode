@@ -54,7 +54,7 @@ func TestDockerfileExistsInRoot(t *testing.T) {
 	createTempDockerfile(t, path)
 	defer removeTempDockerfile(t, path)
 
-	result := DockerfileExists(".")
+	result := DockerfileExists(constants.CurrentPath)
 	if result.Status != constants.QualityCheckSuccess {
 		t.Errorf(errMessage, constants.QualityCheckSuccess, result.Status)
 	}
