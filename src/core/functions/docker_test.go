@@ -54,7 +54,7 @@ func TestDockerfileExistsInRoot(t *testing.T) {
 	createTempDockerfile(t, path)
 	defer removeTempDockerfile(t, path)
 
-	result := DockerfileExists()
+	result := DockerfileExists(".")
 	if result.Status != constants.QualityCheckSuccess {
 		t.Errorf(errMessage, constants.QualityCheckSuccess, result.Status)
 	}
@@ -81,7 +81,7 @@ func TestDockerfileExistsInDockerFolder(t *testing.T) {
 	defer removeTempFolder(t, dockerFolder)
 	defer removeTempFolder(t, infraFolder)
 
-	result := DockerfileExists()
+	result := DockerfileExists("docker")
 	if result.Status != constants.QualityCheckSuccess {
 		t.Errorf(errMessage, constants.QualityCheckSuccess, result.Status)
 	}
