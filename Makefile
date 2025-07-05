@@ -23,7 +23,7 @@ imports: path
 lint: path pre-commit
 	go clean -cache -testcache -modcache
 	pre-commit autoupdate
-	pre-commit run
+	pre-commit run --all-files
 
 ## https://golangci-lint.run/product/migration-guide
 lint-migrate:
