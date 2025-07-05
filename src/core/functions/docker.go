@@ -21,11 +21,8 @@ func DockerfileExists() types.BaseResponse {
 	for _, folder := range PossibleFolderPath {
 		files, err := os.ReadDir(folder)
 		if err != nil {
-			log.Fatalf(fatalMessage, constants.FileNotFound, folder)
-
-			return types.BaseResponse{
-				Status: constants.QualityCheckFailed,
-			}
+			log.Printf(fatalMessage, constants.FileNotFound, folder)
+			continue
 		}
 
 		for _, file := range files {

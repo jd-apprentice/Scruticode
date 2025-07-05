@@ -76,13 +76,17 @@ func readAndParsePackageJSON(path string) (map[string]interface{}, error) {
 }
 
 func hasDependency(packageJSON map[string]interface{}, dependency string) bool {
-	dependencies, found := packageJSON["dependencies"].(map[string]interface{})
-	if !found {
-		return false
+	if deps, ok := packageJSON["dependencies"].(map[string]interface{}); ok {
+		if _, exists := deps[dependency]; exists {
+			return true
+		}
 	}
-	_, exists := dependencies[dependency]
-
-	return exists
+	if devDeps, ok := packageJSON["devDependencies"].(map[string]interface{}); ok {
+		if _, exists := devDeps[dependency]; exists {
+			return true
+		}
+	}
+	return false
 }
 
 func hasScript(packageJSON map[string]interface{}, script string) bool {

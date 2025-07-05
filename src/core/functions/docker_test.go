@@ -50,7 +50,6 @@ func TestDockerfileExistsInRoot(t *testing.T) {
 	teardownSuite := setupSuite(t)
 	defer teardownSuite(t)
 
-	t.Parallel()
 	path := "Dockerfile"
 	createTempDockerfile(t, path)
 	defer removeTempDockerfile(t, path)
@@ -62,8 +61,6 @@ func TestDockerfileExistsInRoot(t *testing.T) {
 }
 
 func TestDockerfileExistsInDockerFolder(t *testing.T) {
-	t.Parallel()
-
 	const dockerFolder = "docker"
 
 	const infraFolder = "infra"

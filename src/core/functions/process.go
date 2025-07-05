@@ -85,10 +85,14 @@ func processKeyValues(keyValues []string) {
 		}
 
 		keyAsString := utils.ToAbsoluteString(value)
-		keyLangOrPlatform := key == "langs" || key == "platforms"
+		isLang := key == "langs"
+		isPlatform := key == "platforms"
 
-		if keyLangOrPlatform {
+		if isLang {
 			extraLangConfig(keyAsString)
+		}
+
+		if isPlatform {
 			extraPlatformConfig(keyAsString)
 		}
 

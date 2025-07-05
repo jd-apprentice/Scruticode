@@ -1,8 +1,6 @@
 package functions
 
 import (
-	"bytes"
-	"log"
 	"os"
 	"testing"
 
@@ -31,32 +29,4 @@ func TestReadme(t *testing.T) {
 			t.Errorf("Expected failure, got %v", resp.Status)
 		}
 	})
-}
-
-func TestLoggerErrorFile(t *testing.T) {
-	buf := &bytes.Buffer{}
-	log.SetOutput(buf)
-	defer log.SetOutput(os.Stderr)
-
-	log.Fatalf("%s: %s\n", constants.FileNotFound, constants.ReadmeFilePath)
-	expected := constants.FileNotFound + ": " + constants.ReadmeFilePath + "\n"
-	actual := buf.String()
-
-	if actual != expected {
-		t.Errorf("LoggerErrorFile() = %q, want %q", actual, expected)
-	}
-}
-
-func TestLoggerDebugFile(t *testing.T) {
-	buf := &bytes.Buffer{}
-	log.SetOutput(buf)
-	defer log.SetOutput(os.Stderr)
-
-	log.Printf("%s: %s\n", constants.FileFound, constants.ReadmeFilePath)
-	expected := constants.FileFound + ": " + constants.ReadmeFilePath + "\n"
-	actual := buf.String()
-
-	if actual != expected {
-		t.Errorf("LoggerDebugFile() = %q, want %q", actual, expected)
-	}
 }

@@ -52,7 +52,7 @@ build-arm: clear-bin fmt
 	GOARCH=arm64 go build -o ./bin/ScrutiCode ./src/main.go
 
 test:
-	go test -v ./src/... | grep FAIL
+	go test -v ./src/...
 
 test-coverage:
 	go test -coverprofile=coverage.out ./src/...

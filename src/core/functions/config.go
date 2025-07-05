@@ -19,7 +19,7 @@ func ReadConfigFile() string {
 
 	filePath := usr.HomeDir + constants.ConfigFilePath
 	if _, errPath := os.Stat(filePath); os.IsNotExist(errPath) {
-		InitConfigFile()
+		InitConfigFile(usr.HomeDir)
 	}
 
 	content, errReadFile := os.ReadFile(filePath)

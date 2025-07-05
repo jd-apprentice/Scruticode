@@ -10,15 +10,20 @@ import (
 	"os"
 )
 
-func InitConfigFile() {
+func InitConfigFile(homeDir string) {
+	configFile := homeDir + constants.ConfigFilePath
+	utils.IfFileNotExists(configFile, createConfigFile)
+}
+
+func Init() {
 	homeDir, errHomeUsr := os.UserHomeDir()
 	if errHomeUsr != nil {
 		log.Fatal(errHomeUsr)
 	}
-
-	configFile := homeDir + constants.ConfigFilePath
-	utils.IfFileNotExists(configFile, createConfigFile)
+	InitConfigFile(homeDir)
 }
+
+var exampleConfigURL = constants.ExampleConfig
 
 func createConfigFile(configFilePath string) {
 	file, errFailedToCreate := os.Create(configFilePath)
@@ -30,7 +35,7 @@ func createConfigFile(configFilePath string) {
 	defer file.Close()
 
 	ctx := context.Background()
-	request, errHTTP := http.NewRequestWithContext(ctx, http.MethodGet, constants.ExampleConfig, nil)
+	request, errHTTP := http.NewRequestWithContext(ctx, http.MethodGet, exampleConfigURL, nil)
 	if errHTTP != nil {
 		log.Println(errHTTP)
 
