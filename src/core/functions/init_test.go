@@ -61,6 +61,7 @@ func TestInitConfigFile(t *testing.T) {
 }
 
 func TestCreateConfigFile(t *testing.T) {
+	const fileName = "settings.toml"
 	tmpDir, err := os.MkdirTemp("", "test-create-config")
 	if err != nil {
 		t.Fatalf("Failed to create temp dir: %v", err)
