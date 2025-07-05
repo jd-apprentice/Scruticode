@@ -201,6 +201,7 @@ func TestHasScript(t *testing.T) {
 }
 
 func TestReadAndParsePackageJSON(t *testing.T) {
+	const packageFile = "package.json"
 	tmpDir, err := os.MkdirTemp("", "test-read-parse")
 	if err != nil {
 		t.Fatalf("Failed to create temp dir: %v", err)

@@ -17,10 +17,10 @@ fmt:
 fmt-fix:
 	go fmt ./...
 
-imports: path
+imports:
 	goimports -w ./src
 
-lint: path pre-commit
+lint: pre-commit
 	go clean -cache -testcache -modcache
 	pre-commit autoupdate
 	pre-commit run --all-files
@@ -55,11 +55,8 @@ test:
 	go test -v ./src/...
 
 test-coverage:
-	go test -coverprofile=coverage.out ./src/...
+	go test -coverprofile=coverage.out ./src/...; \
 	go tool cover -html=coverage.out -o coverage.html
-
-path:
-	@export PATH=$$PATH:$$HOME/go/bin;
 
 pre-commit:
 	pre-commit clean
