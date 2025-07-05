@@ -8,35 +8,25 @@ import (
 	"strings"
 )
 
-func DockerfileExists() types.BaseResponse {
-	PossibleFolderPath := []string{
-		".",
-		"docker",
-		"infra",
-		"mocks",
-	}
-
+func DockerfileExists(folder string) types.BaseResponse {
 	const fatalMessage = "%s: %s\n"
 
-	for _, folder := range PossibleFolderPath {
-		files, err := os.ReadDir(folder)
-		if err != nil {
-			log.Printf(fatalMessage, constants.FileNotFound, folder)
-			continue
-		}
+	files, err := os.ReadDir(folder)
+	if err != nil {
+		log.Fatalf(fatalMessage, constants.FileNotFound, folder)
+	}
 
-		for _, file := range files {
-			if strings.Contains(file.Name(), "Dockerfile") {
-				log.Printf(fatalMessage, constants.FileFound, file.Name())
+	for _, file := range files {
+		if strings.Contains(file.Name(), "Dockerfile") {
+			log.Printf(fatalMessage, constants.FileFound, file.Name())
 
-				return types.BaseResponse{
-					Status: constants.QualityCheckSuccess,
-				}
+			return types.BaseResponse{
+				Status: constants.QualityCheckSuccess,
 			}
 		}
 	}
 
-	log.Fatalf(fatalMessage, constants.FileNotFound, strings.Join(PossibleFolderPath, ", "))
+	log.Fatalf(fatalMessage, constants.FileNotFound, folder)
 
 	return types.BaseResponse{
 		Status: constants.QualityCheckFailed,

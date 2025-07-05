@@ -9,13 +9,13 @@ import (
 
 type ActionFunc func()
 
-func ProcessConfigFile(content string) {
+func ProcessConfigFile(content string, folder string) {
 	sections := extractSections(content)
 
 	for _, section := range sections {
 		_, keyValues := parseSection(section)
 		// Check if is needed here to validate the HEADER, right now it's being ignored
-		processKeyValues(keyValues)
+		processKeyValues(keyValues, folder)
 	}
 }
 
@@ -52,10 +52,10 @@ func parseSection(section string) (string, []string) {
 	return header, keyValues
 }
 
-func processKeyValues(keyValues []string) {
+func processKeyValues(keyValues []string, folder string) {
 	var actions = map[string]ActionFunc{
 		"docker_compose":       func() { log.Println("action for docker_compose") },
-		"dockerfile":           func() { log.Print(DockerfileExists()) },
+		"dockerfile":           func() { log.Print(DockerfileExists(folder)) },
 		"readme":               func() { log.Print(Readme(constants.ReadmeFilePath)) },
 		"ci":                   func() { log.Println("action for ci") },
 		"cd":                   func() { log.Println("action for cd") },
