@@ -7,7 +7,7 @@ import (
 
 func main() {
 	functions.Init()
+	folder := functions.GenerateArguments(os.Args[1:])
 	configuration := functions.ReadConfigFile()
-	functions.ProcessConfigFile(configuration)
-	functions.GenerateArguments(os.Args[1:])
+	functions.ProcessConfigFile(configuration, folder)
 }
