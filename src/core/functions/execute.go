@@ -1,15 +1,15 @@
 package functions
 
 import (
+	"flag"
 	"log"
 	"os"
 )
 
-// ExecuteScan orchestrates the scanning process based on configuration and arguments.
 func ExecuteScan() {
 	configuration := ReadConfigFile()
 	ProcessConfigFile(configuration)
-	_, _, directory, repository := GenerateArguments()
+	_, _, directory, repository := GenerateArguments(flag.CommandLine)
 
 	if repository != "" {
 		log.Println("Cloning repository:", repository)

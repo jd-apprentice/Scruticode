@@ -2,21 +2,16 @@ package functions
 
 import (
 	"flag"
-	"log"
+	"os"
 )
 
 // https://gobyexample.com/command-line-flags
-func GenerateArguments() (string, string, string, string) {
-	lang := flag.String("languages", "golang", "Supported languages [golang, typescript, javascript, python].")
-	platform := flag.String("platforms", "github", "Supported platforms [github, gitlab, azuredevops]")
-	directory := flag.String("directory", ".", "The directory to scan.")
-	repository := flag.String("repository", "", "The repository to scan.")
-	flag.Parse()
-
-	log.Println("LANG:", *lang)
-	log.Println("PLATFORM:", *platform)
-	log.Println("DIRECTORY:", *directory)
-	log.Println("REPOSITORY:", *repository)
+func GenerateArguments(fs *flag.FlagSet) (string, string, string, string) {
+	lang := fs.String("languages", "golang", "Supported languages [golang, typescript, javascript, python].")
+	platform := fs.String("platforms", "github", "Supported platforms [github, gitlab, azuredevops]")
+	directory := fs.String("directory", ".", "The directory to scan.")
+	repository := fs.String("repository", "", "The repository to scan.")
+	fs.Parse(os.Args[1:])
 
 	return *lang, *platform, *directory, *repository
 }
