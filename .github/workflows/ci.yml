@@ -56,5 +56,8 @@ jobs:
       - name: Run make imports
         run: make imports
 
+      - name: Run make test
+        run: make test
+
       - name: Run make build
         run: make build
