@@ -35,5 +35,10 @@ docker/
 infra/
 Dockerfile
 profile.cov
+<<<<<<< Updated upstream
 mocks/
 .golangci.bck.yaml
+=======
+existing_file.txt
+mocks/
+>>>>>>> Stashed changes

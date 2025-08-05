@@ -1,27 +1,22 @@
 package functions
 
 import (
-	"Scruticode/src/shared/constants"
 	"flag"
 	"log"
-	"os"
 )
 
 // https://gobyexample.com/command-line-flags
-func GenerateArguments(args []string) string {
-	fs := flag.NewFlagSet("generate", flag.ContinueOnError)
-	lang := fs.String("languages", "golang", "Supported languages [golang, typescript, javascript, python].")
-	platform := fs.String("platforms", "github", "Supported platforms [github, gitlab, azuredevops]")
-	folder := fs.String("folder", constants.CurrentPath, "The folder to analyze.")
-	fs.Parse(args)
+func GenerateArguments() (string, string, string, string) {
+	lang := flag.String("languages", "golang", "Supported languages [golang, typescript, javascript, python].")
+	platform := flag.String("platforms", "github", "Supported platforms [github, gitlab, azuredevops]")
+	directory := flag.String("directory", ".", "The directory to scan.")
+	repository := flag.String("repository", "", "The repository to scan.")
+	flag.Parse()
 
-	var environment = os.Getenv("GOENV")
+	log.Println("LANG:", *lang)
+	log.Println("PLATFORM:", *platform)
+	log.Println("DIRECTORY:", *directory)
+	log.Println("REPOSITORY:", *repository)
 
-	if environment == "development" {
-		log.Println("LANG:", *lang)
-		log.Println("PLATFORM:", *platform)
-		log.Println("FOLDER:", *folder)
-	}
-
-	return *folder
+	return *lang, *platform, *directory, *repository
 }

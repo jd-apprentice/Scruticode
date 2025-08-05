@@ -2,7 +2,7 @@
 
 repos:
   - repo: https://github.com/tekwizely/pre-commit-golang
-    rev: v1.0.0-rc.1
+    rev: v1.0.0-rc.2
     hooks:
       - id: go-imports ## go install golang.org/x/tools/cmd/goimports@latest
       - id: golangci-lint ## yay -S golangci-lint
