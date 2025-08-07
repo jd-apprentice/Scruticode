@@ -10,3 +10,12 @@ A simple yet powerful tool to evaluate quality and processes in your SDLC. 🚀
 - pre-commit (https://pre-commit.com/#install)
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=jd-apprentice_Scruticode&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=jd-apprentice_Scruticode)
+
+## Usage
+
+Scruticode can be run with the following flags:
+
+-   `--languages`: Specify the languages to analyze (e.g., --languages=golang,typescript).
+-   `--platforms`: Specify the platforms (e.g., --platforms=github).
+-   `--directory`: Specify the local directory to scan. Defaults to the current directory.
+-   `--repository`: Specify a Git repository to clone and scan.

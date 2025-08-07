@@ -2,9 +2,9 @@ package functions
 
 import (
 	"bytes"
+	"flag"
 	"log"
 	"os"
-	"strings"
 	"testing"
 )
 
@@ -20,16 +20,18 @@ func TestGenerateArguments(t *testing.T) {
 		var buf bytes.Buffer
 		log.SetOutput(&buf)
 
+		fs := flag.NewFlagSet("test", flag.ContinueOnError)
+		fs.SetOutput(&buf)
+
 		os.Args = []string{"cmd"}
 
-		GenerateArguments(os.Args[1:])
+		lang, platform, _, _ := GenerateArguments(fs)
 
-		output := buf.String()
-		if !strings.Contains(output, "LANG: golang") {
-			t.Errorf("Expected log to contain 'LANG: golang', but it didn't. Got: %s", output)
+		if lang != "golang" {
+			t.Errorf("Expected language to be 'golang', but got: %s", lang)
 		}
-		if !strings.Contains(output, "PLATFORM: github") {
-			t.Errorf("Expected log to contain 'PLATFORM: github', but it didn't. Got: %s", output)
+		if platform != "github" {
+			t.Errorf("Expected platform to be 'github', but got: %s", platform)
 		}
 	})
 
@@ -37,16 +39,18 @@ func TestGenerateArguments(t *testing.T) {
 		var buf bytes.Buffer
 		log.SetOutput(&buf)
 
-		os.Args = []string{"cmd", "-languages=typescript", "-platforms=gitlab"}
+		fs := flag.NewFlagSet("test", flag.ContinueOnError)
+		fs.SetOutput(&buf) // Redirect flag output to buffer
 
-		GenerateArguments(os.Args[1:])
+		os.Args = []string{"cmd", "-languages=typescript", "-platforms=gitlab"} // Simulate command line arguments
 
-		output := buf.String()
-		if !strings.Contains(output, "LANG: typescript") {
-			t.Errorf("Expected log to contain 'LANG: typescript', but it didn't. Got: %s", output)
+		lang, platform, _, _ := GenerateArguments(fs)
+
+		if lang != "typescript" {
+			t.Errorf("Expected language to be 'typescript', but got: %s", lang)
 		}
-		if !strings.Contains(output, "PLATFORM: gitlab") {
-			t.Errorf("Expected log to contain 'PLATFORM: gitlab', but it didn't. Got: %s", output)
+		if platform != "gitlab" {
+			t.Errorf("Expected platform to be 'gitlab', but got: %s", platform)
 		}
 	})
 }

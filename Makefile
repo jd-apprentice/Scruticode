@@ -1,4 +1,4 @@
-all: lint fmt imports build start
+all: lint fmt imports test build start
 
 ### Development
 
