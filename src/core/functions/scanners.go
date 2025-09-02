@@ -24,15 +24,16 @@ func ScanDirectory(path string) {
 }
 
 func RunScanners(keyValues []string) {
+	var lang string
 	var actions = map[string]ActionFunc{
 		"docker_compose":       func() { log.Println("action for docker_compose") },
-		"dockerfile":           func() { log.Print(DockerfileExists(".")) },
+		"dockerfile":           func() { log.Print(DockerfileExists(constants.CurrentPath)) },
 		"readme":               func() { log.Print(Readme(constants.ReadmeFilePath)) },
 		"ci":                   func() { log.Println("action for ci") },
 		"cd":                   func() { log.Println("action for cd") },
 		"conventional_commits": func() { log.Println("action for conventional_commits") },
-		"pre_commit":           func() { log.Println("action for pre_commit") },
-		"linter":               func() { log.Println("action for linter") },
+		"pre_commit":           func() { log.Print(PreCommitExists(lang, constants.CurrentPath)) },
+		"linter":               func() { log.Print(LinterJavascriptExists(constants.CurrentPath)) },
 		"formatter":            func() { log.Println("action for formatter") },
 		"unit":                 func() { log.Println("action for unit") },
 		"integration":          func() { log.Println("action for integration") },
@@ -56,6 +57,9 @@ func RunScanners(keyValues []string) {
 		}
 
 		keyAsString := utils.ToAbsoluteString(value)
+		if key == "langs" {
+			lang = keyAsString
+		}
 		keyLangOrPlatform := key == "langs" || key == "platforms"
 
 		if keyLangOrPlatform {
