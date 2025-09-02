@@ -1,8 +1,8 @@
 package functions
 
 import (
-	"Scruticode/src/shared/constants"
-	"Scruticode/src/shared/utils"
+	"Scruticode/internal/shared/constants"
+	"Scruticode/internal/shared/utils"
 	"log"
 	"os"
 	"strings"

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"Scruticode/src/core/functions"
+	"Scruticode/internal/core/functions"
 )
 
 func main() {

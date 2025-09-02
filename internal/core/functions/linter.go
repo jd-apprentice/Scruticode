@@ -1,8 +1,8 @@
 package functions
 
 import (
-	"Scruticode/src/core/types"
-	"Scruticode/src/shared/constants"
+	"Scruticode/internal/core/types"
+	"Scruticode/internal/shared/constants"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -38,6 +38,7 @@ func LinterJavascriptExists(projectPath ...string) types.BaseResponse {
 
 		return types.BaseResponse{Status: constants.QualityCheckFailed}
 	}
+
 	log.Printf("%s: %s found in dependencies.\n", constants.CheckPassed, eslintDependency)
 
 	if !hasScript(packageJSON, lintScript) {
@@ -45,6 +46,7 @@ func LinterJavascriptExists(projectPath ...string) types.BaseResponse {
 
 		return types.BaseResponse{Status: constants.QualityCheckFailed}
 	}
+
 	log.Printf("%s: %s script found in package.json.\n", constants.CheckPassed, lintScript)
 
 	return types.BaseResponse{Status: constants.QualityCheckSuccess}
@@ -54,6 +56,7 @@ func getBasePath(projectPath ...string) (string, error) {
 	if len(projectPath) > 0 && projectPath[0] != "" {
 		return projectPath[0], nil
 	}
+
 	currentDirectory, err := os.Getwd()
 	if err != nil {
 		return "", fmt.Errorf("error getting current directory: %w", err)
@@ -67,6 +70,7 @@ func readAndParsePackageJSON(path string) (map[string]interface{}, error) {
 	if err != nil {
 		return nil, fmt.Errorf("error reading package.json: %w", err)
 	}
+
 	var packageJSON map[string]interface{}
 	if err := json.Unmarshal(content, &packageJSON); err != nil {
 		return nil, fmt.Errorf("error parsing package.json: %w", err)
@@ -76,6 +80,7 @@ func readAndParsePackageJSON(path string) (map[string]interface{}, error) {
 }
 
 func hasDependency(packageJSON map[string]interface{}, dependency string) bool {
+
 	if deps, ok := packageJSON["dependencies"].(map[string]interface{}); ok {
 		if _, exists := deps[dependency]; exists {
 			return true
@@ -86,6 +91,7 @@ func hasDependency(packageJSON map[string]interface{}, dependency string) bool {
 			return true
 		}
 	}
+
 	return false
 }
 
@@ -94,6 +100,7 @@ func hasScript(packageJSON map[string]interface{}, script string) bool {
 	if !found {
 		return false
 	}
+
 	_, exists := scripts[script]
 
 	return exists

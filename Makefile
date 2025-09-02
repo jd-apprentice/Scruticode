@@ -18,7 +18,7 @@ fmt-fix:
 	go fmt ./...
 
 imports:
-	goimports -w ./src
+	goimports -w ./internal
 
 lint: pre-commit
 	go clean -cache -testcache -modcache
@@ -46,16 +46,16 @@ cache:
 
 ## https://github.com/golang-standards/project-layout/issues/113#issuecomment-1336514449
 build: clear-bin fmt
-	GOARCH=amd64 go build -o ./bin/ScrutiCode ./src/main.go
+	GOARCH=amd64 go build -o ./bin/ScrutiCode ./cmd/scruticode/main.go
 
 build-arm: clear-bin fmt
-	GOARCH=arm64 go build -o ./bin/ScrutiCode ./src/main.go
+	GOARCH=arm64 go build -o ./bin/ScrutiCode ./cmd/scruticode/main.go
 
 test:
-	go test -v ./src/...
+	go test -v ./internal/...
 
 test-coverage:
-	go test -coverprofile=coverage.out ./src/...; \
+	go test -coverprofile=coverage.out ./internal/...; \
 	go tool cover -html=coverage.out -o coverage.html
 
 pre-commit:

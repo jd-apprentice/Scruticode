@@ -14,9 +14,9 @@ linters:
           files:
             - '!**/*_a _file.go'
           allow:
-            - Scruticode/src/core
-            - Scruticode/src/shared
-            - Scruticode/src/main.go
+            - Scruticode/internal/core
+            - Scruticode/internal/shared
+            - Scruticode/cmd/scruticode/main.go
           deny:
             - pkg: math/rand$
               desc: use math/rand/v2

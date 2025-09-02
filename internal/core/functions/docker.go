@@ -1,8 +1,8 @@
 package functions
 
 import (
-	"Scruticode/src/core/types"
-	"Scruticode/src/shared/constants"
+	"Scruticode/internal/core/types"
+	"Scruticode/internal/shared/constants"
 	"log"
 	"os"
 	"strings"
@@ -10,6 +10,7 @@ import (
 
 func DockerfileExists(folder string) types.BaseResponse {
 	const fatalMessage = "%s: %s\n"
+
 	const dockerfile = "Dockerfile"
 
 	files, err := os.ReadDir(folder)

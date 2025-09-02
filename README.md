@@ -19,3 +19,7 @@ Scruticode can be run with the following flags:
 -   `--platforms`: Specify the platforms (e.g., --platforms=github).
 -   `--directory`: Specify the local directory to scan. Defaults to the current directory.
 -   `--repository`: Specify a Git repository to clone and scan.
+
+## Folder structure
+
+Based on this [article](https://dev.to/ayoubzulfiqar/go-the-ultimate-folder-structure-6gj)

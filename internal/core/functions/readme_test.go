@@ -4,7 +4,7 @@ import (
 	"os"
 	"testing"
 
-	"Scruticode/src/shared/constants"
+	"Scruticode/internal/shared/constants"
 )
 
 func TestReadme(t *testing.T) {
