@@ -20,7 +20,7 @@ func langHandler(lang string) {
 	switch lang {
 	case "golang":
 		{
-			log.Println("action for golang")
+			log.Println("Using configuration for Golang")
 		}
 	case "python":
 		{
@@ -41,7 +41,7 @@ func platformHandler(platform string) {
 	switch platform {
 	case "github":
 		{
-			log.Println("action for github")
+			log.Println("Using configuration for Github")
 		}
 	case "gitlab":
 		{

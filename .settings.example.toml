@@ -59,6 +59,11 @@ stress = false
 dockerfile = false
 docker_compose = false
 
+### About LLM and Agents
+### Artificial intelligence
+copilot = false
+cline = false
+
 ### LANG CONFIGS
 [javascript-typescript]
 node = false
