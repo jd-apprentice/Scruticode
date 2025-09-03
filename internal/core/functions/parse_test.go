@@ -24,7 +24,7 @@ func TestExtraLangConfig(t *testing.T) {
 			log.SetOutput(&buf)
 			extraLangConfig(tt.lang)
 			if tt.expected {
-				if !strings.Contains(buf.String(), "action for "+tt.lang) {
+				if !strings.Contains(buf.String(), "Using configuration for "+tt.lang) {
 					t.Errorf("expected log message not found")
 				}
 			} else {
@@ -42,7 +42,7 @@ func TestExtraPlatformConfig(t *testing.T) {
 		platform string
 		expected string
 	}{
-		{"supported platform", "github", "action for github"},
+		{"supported platform", "github", "Using configuration for github"},
 		{"unsupported platform", "bitbucket", ""},
 		{"empty platform string", "", ""},
 	}
