@@ -7,8 +7,8 @@ import (
 	"os"
 )
 
-func CopilotRulesExists(copilot_file string) types.BaseResponse {
-	if _, err := os.Stat(copilot_file); err == nil {
+func CopilotRulesExists(copilotFile string) types.BaseResponse {
+	if _, err := os.Stat(copilotFile); err == nil {
 		log.Printf("%s: copilot-instructions.md\n", constants.FileFound)
 		return types.BaseResponse{Status: constants.QualityCheckSuccess}
 	}
