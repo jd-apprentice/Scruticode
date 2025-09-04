@@ -2,10 +2,9 @@ name: goreleaser
 
 on:
   workflow_dispatch:
-  workflow_run:
-    workflows: ["CI"]
-    types:
-      - completed
+  push:
+    tags:
+      - "*"
 
 permissions:
   contents: write
