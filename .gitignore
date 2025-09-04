@@ -38,3 +38,6 @@ profile.cov
 mocks/
 .golangci.bck.yaml
 existing_file.txt
+
+# Added by goreleaser init:
+dist/
