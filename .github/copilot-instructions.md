@@ -2,6 +2,11 @@
 applyTo: "**"
 ---
 
+## Code Review
+
+When performing a code review, respond always in english and check for my grammar.
+When performing a code review, follow this file for any standard.
+
 ## Coding
 
 Do not use if else statements in general, prefer early returns or negate conditions.

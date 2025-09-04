@@ -50,12 +50,12 @@ func checkPreCommitConfig(basePath string) types.BaseResponse {
 	ymlPath := basePath + string(os.PathSeparator) + ".pre-commit-config.yml"
 
 	if _, err := os.Stat(yamlPath); err == nil {
-		log.Printf("%s: .pre-commit-config.yaml found.\n", constants.CheckPassed)
+		log.Printf("%s: .pre-commit-config.yaml\n", constants.FileFound)
 		return types.BaseResponse{Status: constants.QualityCheckSuccess}
 	}
 
 	if _, err := os.Stat(ymlPath); err == nil {
-		log.Printf("%s: .pre-commit-config.yml found.\n", constants.CheckPassed)
+		log.Printf("%s: .pre-commit-config.yml\n", constants.FileFound)
 		return types.BaseResponse{Status: constants.QualityCheckSuccess}
 	}
 

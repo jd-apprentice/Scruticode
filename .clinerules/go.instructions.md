@@ -60,6 +60,7 @@ tests/
 - Don’t hardcode config—use environment variables or config files.
 - Don’t panic or exit in library code; return errors instead.
 - Don’t expose secrets—use `.env` or secret managers.
+- Don't use `if-else` statements unless needed, enforce negation or early return patterns.
 - Avoid embedding business logic in HTTP handlers.
 
 ## 🧪 Testing Guidelines
