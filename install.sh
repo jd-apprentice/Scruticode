@@ -55,9 +55,9 @@ TEMP_FILE="$TEMP_DIR/scruticode.tar.gz"
 curl -L -o "$TEMP_FILE" "$DOWNLOAD_URL" || error_exit "Failed to download file."
 tar -xzf "$TEMP_FILE" -C "$TEMP_DIR" || error_exit "Failed to extract file."
 
-BINARY_NAME="scruticode"
+BINARY_NAME="Scruticode"
 BINARY_PATH="$TEMP_DIR/$BINARY_NAME"
-INSTALL_PATH="$INSTALL_DIR/$BINARY_NAME"
+INSTALL_PATH="$INSTALL_DIR/scruticode"
 
 if [ ! -f "$BINARY_PATH" ]; then
   error_exit "Binary file '$BINARY_NAME' not found after extraction."
