@@ -3,6 +3,14 @@ A simple yet powerful tool to evaluate quality and processes in your SDLC. 🚀
 
 <img width="1439" height="899" alt="image" src="https://github.com/user-attachments/assets/d64bdf74-5f31-4a89-bc1c-0d97e1815ec6" />
 
+## Install
+
+To install it you can run
+
+```shell
+curl -s https://raw.githubusercontent.com/jd-apprentice/Scruticode/main/install.sh | sudo bash
+```
+
 ## Requirements (dev)
 
 - Golang
