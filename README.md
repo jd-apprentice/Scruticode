@@ -8,7 +8,7 @@ A simple yet powerful tool to evaluate quality and processes in your SDLC. 🚀
 To install it you can run
 
 ```shell
-curl -s https://raw.githubusercontent.com/jd-apprentice/Scruticode/main/install.sh | sudo bash
+curl -s https://raw.githubusercontent.com/jd-apprentice/Scruticode/master/install.sh | sudo bash
 ```
 
 ## Requirements (dev)
