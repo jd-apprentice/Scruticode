@@ -40,7 +40,7 @@ dast = false
 #### OPTIONS: conventional_commits, pre_commit, linter, formatter
 [quality]
 conventional_commits = false
-pre_commit = false
+pre_commit = true
 linter = false
 formatter = false
 
