@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 )
 
 func InitConfigFile(homeDir string) {
@@ -26,6 +27,12 @@ func Init() {
 var exampleConfigURL = constants.ExampleConfig
 
 func createConfigFile(configFilePath string) {
+	configDir := filepath.Dir(configFilePath)
+	if err := os.MkdirAll(configDir, os.ModePerm); err != nil {
+		log.Println("failed to create config directory:", err)
+		return
+	}
+
 	file, errFailedToCreate := os.Create(configFilePath)
 	if errFailedToCreate != nil {
 		log.Println(constants.ErrMessageFile)
