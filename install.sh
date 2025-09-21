@@ -55,12 +55,11 @@ TEMP_FILE="$TEMP_DIR/scruticode.tar.gz"
 curl -L -o "$TEMP_FILE" "$DOWNLOAD_URL" || error_exit "Failed to download file."
 tar -xzf "$TEMP_FILE" -C "$TEMP_DIR" || error_exit "Failed to extract file."
 
-BINARY_NAME="Scruticode"
-BINARY_PATH="$TEMP_DIR/$BINARY_NAME"
+BINARY_PATH="$TEMP_DIR/Scruticode"
 INSTALL_PATH="$INSTALL_DIR/scruticode"
 
 if [ ! -f "$BINARY_PATH" ]; then
-  error_exit "Binary file '$BINARY_NAME' not found after extraction."
+  error_exit "Binary file 'scruticode' not found after extraction."
 fi
 
 sudo mv "$BINARY_PATH" "$INSTALL_PATH" || error_exit "Failed to move binary. You may need sudo permissions."
