@@ -40,7 +40,9 @@ API_URL="https://api.github.com/repos/$REPO/releases/latest"
 
 RELEASES_JSON=$(curl -s "$API_URL")
 
-DOWNLOAD_URL=$(echo "$RELEASES_JSON" | grep "browser_download_url" | grep -E "scruticode-linux-$ARCH\.tar\.gz" | cut -d : -f 2,3 | tr -d '"' | tr -d ' ' | tr -d ',')
+DOWNLOAD_URL=$(echo "$RELEASES_JSON" | grep "browser_download_url" | grep -E "Scruticode_Linux_$ARCH\.tar\.gz" | cut -d : -f 2,3 | tr -d '"' | tr -d ' ' | tr -d ',')
+
+echo "$DOWNLOAD_URL"
 
 if [ -z "$DOWNLOAD_URL" ]; then
   error_exit "Could not find a compatible Scruticode binary for ($ARCH) in the latest release."
@@ -53,7 +55,7 @@ TEMP_FILE="$TEMP_DIR/scruticode.tar.gz"
 curl -L -o "$TEMP_FILE" "$DOWNLOAD_URL" || error_exit "Failed to download file."
 tar -xzf "$TEMP_FILE" -C "$TEMP_DIR" || error_exit "Failed to extract file."
 
-BINARY_NAME="scruticode"
+BINARY_NAME="Scruticode"
 BINARY_PATH="$TEMP_DIR/$BINARY_NAME"
 INSTALL_PATH="$INSTALL_DIR/$BINARY_NAME"
 
