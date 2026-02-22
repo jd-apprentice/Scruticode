@@ -1,6 +1,7 @@
 package functions
 
 import (
+	scannerChecks "Scruticode/internal/core/functions/scanners"
 	"Scruticode/internal/core/types"
 	"Scruticode/internal/shared/constants"
 	"Scruticode/internal/shared/utils"
@@ -29,40 +30,75 @@ func RunScanners(keyValues []string) []types.CheckResult {
 	var results []types.CheckResult
 
 	var actions = map[string]types.CheckFunc{
-		"docker_compose": func(l string) types.CheckResult { return types.CheckResult{Name: "docker_compose", Passed: false} },
+		"docker_compose": func(l string) types.CheckResult {
+			return types.CheckResult{Name: "docker_compose", Passed: scannerChecks.DockerComposeExists(constants.CurrentPath).Status == constants.QualityCheckSuccess}
+		},
 		"dockerfile": func(l string) types.CheckResult {
-			return types.CheckResult{Name: "dockerfile", Passed: DockerfileExists(constants.CurrentPath).Status == constants.QualityCheckSuccess}
+			return types.CheckResult{Name: "dockerfile", Passed: scannerChecks.DockerfileExists(constants.CurrentPath).Status == constants.QualityCheckSuccess}
 		},
 		"readme": func(l string) types.CheckResult {
-			return types.CheckResult{Name: "readme", Passed: Readme(constants.ReadmeFilePath).Status == constants.QualityCheckSuccess}
+			return types.CheckResult{Name: "readme", Passed: scannerChecks.Readme(constants.ReadmeFilePath).Status == constants.QualityCheckSuccess}
 		},
-		"ci": func(l string) types.CheckResult { return types.CheckResult{Name: "ci", Passed: false} },
-		"cd": func(l string) types.CheckResult { return types.CheckResult{Name: "cd", Passed: false} },
+		"ci": func(l string) types.CheckResult {
+			return types.CheckResult{Name: "ci", Passed: scannerChecks.CIPipelineExists(constants.CurrentPath).Status == constants.QualityCheckSuccess}
+		},
+		"cd": func(l string) types.CheckResult {
+			return types.CheckResult{Name: "cd", Passed: scannerChecks.CDPipelineExists(constants.CurrentPath).Status == constants.QualityCheckSuccess}
+		},
 		"conventional_commits": func(l string) types.CheckResult {
-			return types.CheckResult{Name: "conventional_commits", Passed: false}
+			return types.CheckResult{Name: "conventional_commits", Passed: scannerChecks.ConventionalCommitsConfigured(constants.CurrentPath).Status == constants.QualityCheckSuccess}
 		},
 		"copilot": func(l string) types.CheckResult {
-			return types.CheckResult{Name: "copilot", Passed: CopilotRulesExists(constants.CopilotInstructionsPath).Status == constants.QualityCheckSuccess}
+			return types.CheckResult{Name: "copilot", Passed: scannerChecks.CopilotRulesExists(constants.CopilotInstructionsPath).Status == constants.QualityCheckSuccess}
+		},
+		"cline": func(l string) types.CheckResult {
+			return types.CheckResult{Name: "cline", Passed: scannerChecks.ClineRulesExists(constants.ClineRulesDirPath).Status == constants.QualityCheckSuccess}
 		},
 		"pre_commit": func(l string) types.CheckResult {
-			return types.CheckResult{Name: "pre_commit", Passed: PreCommitExists(l, constants.CurrentPath).Status == constants.QualityCheckSuccess}
+			return types.CheckResult{Name: "pre_commit", Passed: scannerChecks.PreCommitExists(l, constants.CurrentPath).Status == constants.QualityCheckSuccess}
 		},
 		"linter": func(l string) types.CheckResult {
-			return types.CheckResult{Name: "linter", Passed: LinterJavascriptExists(constants.CurrentPath).Status == constants.QualityCheckSuccess}
+			return types.CheckResult{Name: "linter", Passed: scannerChecks.LinterJavascriptExists(constants.CurrentPath).Status == constants.QualityCheckSuccess}
 		},
-		"formatter":   func(l string) types.CheckResult { return types.CheckResult{Name: "formatter", Passed: false} },
-		"unit":        func(l string) types.CheckResult { return types.CheckResult{Name: "unit", Passed: false} },
-		"integration": func(l string) types.CheckResult { return types.CheckResult{Name: "integration", Passed: false} },
-		"e2e":         func(l string) types.CheckResult { return types.CheckResult{Name: "e2e", Passed: false} },
-		"coverage":    func(l string) types.CheckResult { return types.CheckResult{Name: "coverage", Passed: false} },
-		"stress":      func(l string) types.CheckResult { return types.CheckResult{Name: "stress", Passed: false} },
-		"secrets":     func(l string) types.CheckResult { return types.CheckResult{Name: "secrets", Passed: false} },
-		"iac":         func(l string) types.CheckResult { return types.CheckResult{Name: "iac", Passed: false} },
-		"code":        func(l string) types.CheckResult { return types.CheckResult{Name: "code", Passed: false} },
-		"container":   func(l string) types.CheckResult { return types.CheckResult{Name: "container", Passed: false} },
-		"deps":        func(l string) types.CheckResult { return types.CheckResult{Name: "deps", Passed: false} },
-		"sast":        func(l string) types.CheckResult { return types.CheckResult{Name: "sast", Passed: false} },
-		"dast":        func(l string) types.CheckResult { return types.CheckResult{Name: "dast", Passed: false} },
+		"formatter": func(l string) types.CheckResult {
+			return types.CheckResult{Name: "formatter", Passed: scannerChecks.FormatterConfigured(constants.CurrentPath).Status == constants.QualityCheckSuccess}
+		},
+		"unit": func(l string) types.CheckResult {
+			return types.CheckResult{Name: "unit", Passed: scannerChecks.UnitTestsConfigured(constants.CurrentPath).Status == constants.QualityCheckSuccess}
+		},
+		"integration": func(l string) types.CheckResult {
+			return types.CheckResult{Name: "integration", Passed: scannerChecks.IntegrationTestsConfigured(constants.CurrentPath).Status == constants.QualityCheckSuccess}
+		},
+		"e2e": func(l string) types.CheckResult {
+			return types.CheckResult{Name: "e2e", Passed: scannerChecks.E2ETestsConfigured(constants.CurrentPath).Status == constants.QualityCheckSuccess}
+		},
+		"coverage": func(l string) types.CheckResult {
+			return types.CheckResult{Name: "coverage", Passed: scannerChecks.CoverageConfigured(constants.CurrentPath).Status == constants.QualityCheckSuccess}
+		},
+		"stress": func(l string) types.CheckResult {
+			return types.CheckResult{Name: "stress", Passed: scannerChecks.StressTestsConfigured(constants.CurrentPath).Status == constants.QualityCheckSuccess}
+		},
+		"secrets": func(l string) types.CheckResult {
+			return types.CheckResult{Name: "secrets", Passed: scannerChecks.SecretScanningConfigured(constants.CurrentPath).Status == constants.QualityCheckSuccess}
+		},
+		"iac": func(l string) types.CheckResult {
+			return types.CheckResult{Name: "iac", Passed: scannerChecks.IACScanningConfigured(constants.CurrentPath).Status == constants.QualityCheckSuccess}
+		},
+		"code": func(l string) types.CheckResult {
+			return types.CheckResult{Name: "code", Passed: scannerChecks.CodeSecurityScanningConfigured(constants.CurrentPath).Status == constants.QualityCheckSuccess}
+		},
+		"container": func(l string) types.CheckResult {
+			return types.CheckResult{Name: "container", Passed: scannerChecks.ContainerSecurityScanningConfigured(constants.CurrentPath).Status == constants.QualityCheckSuccess}
+		},
+		"deps": func(l string) types.CheckResult {
+			return types.CheckResult{Name: "deps", Passed: scannerChecks.DependencyScanningConfigured(constants.CurrentPath).Status == constants.QualityCheckSuccess}
+		},
+		"sast": func(l string) types.CheckResult {
+			return types.CheckResult{Name: "sast", Passed: scannerChecks.SASTConfigured(constants.CurrentPath).Status == constants.QualityCheckSuccess}
+		},
+		"dast": func(l string) types.CheckResult {
+			return types.CheckResult{Name: "dast", Passed: scannerChecks.DASTConfigured(constants.CurrentPath).Status == constants.QualityCheckSuccess}
+		},
 	}
 
 	const emptyAsString = ""
