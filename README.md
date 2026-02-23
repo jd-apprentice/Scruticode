@@ -30,6 +30,8 @@ Scruticode can be run with the following flags:
 -   `--directory`: Specify the local directory to scan. Defaults to the current directory.
 -   `--repository`: Specify a Git repository to clone and scan.
 
+Configuration file is located at home `~/.config/scruticode/settings.toml`
+
 ## Folder structure
 
 Based on this [article](https://dev.to/ayoubzulfiqar/go-the-ultimate-folder-structure-6gj)
