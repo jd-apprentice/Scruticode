@@ -21,7 +21,7 @@ builds:
       - CGO_ENABLED=0
     ldflags:
       - -s -w
-      - -X Scrudicode/internal/shared/constants/version=v{{ .Version }}
+      - -X Scruticode/internal/shared/version.version=v{{ .Version }}
     goos:
       - linux
       - windows

@@ -5,14 +5,14 @@ import (
 	"fmt"
 	"os"
 
-	"Scruticode/internal/shared/constants"
+	"Scruticode/internal/shared/version"
 )
 
 // https://gobyexample.com/command-line-flags
 func GenerateArguments(fs *flag.FlagSet) (string, string, string, string) {
 	for _, arg := range os.Args[1:] {
 		if arg == "-v" || arg == "--version" {
-			version := constants.GetVersion()
+			version := version.GetVersion()
 			fmt.Printf("Scruticode version %s\n", version)
 			os.Exit(0)
 		}

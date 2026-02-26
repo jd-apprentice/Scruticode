@@ -1,4 +1,4 @@
-package constants
+package version
 
 import (
 	"os"
