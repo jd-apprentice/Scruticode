@@ -63,8 +63,3 @@ docker_compose = false
 ### Artificial intelligence
 copilot = false
 cline = false
-
-### LANG CONFIGS
-[javascript-typescript]
-node = false
-bun = false

@@ -9,7 +9,7 @@ import (
 func ExecuteScan() {
 	configuration := ReadConfigFile()
 	ProcessConfigFile(configuration)
-	_, _, directory, repository := GenerateArguments(flag.CommandLine)
+	lang, platform, directory, repository := GenerateArguments(flag.CommandLine)
 
 	if repository != "" {
 		log.Println("Cloning repository:", repository)
@@ -19,11 +19,11 @@ func ExecuteScan() {
 		}
 		log.Println("Repository cloned to:", tempDir)
 		defer RemoveTempDirectory(tempDir)
-		ScanDirectory(tempDir)
+		ScanDirectory(tempDir, lang, platform)
 	}
 
 	if repository == "" {
-		ScanDirectory(directory)
+		ScanDirectory(directory, lang, platform)
 	}
 }
 

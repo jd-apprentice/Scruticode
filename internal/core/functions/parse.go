@@ -20,19 +20,19 @@ func langHandler(lang string) {
 	switch lang {
 	case "golang":
 		{
-			log.Println("Using configuration for golang")
+			log.Println("TODO: Action for Golang")
 		}
 	case "python":
 		{
-			log.Println("action for python")
+			log.Println("TODO: Action for Python")
 		}
 	case "typescript":
 		{
-			log.Println("action for typescript")
+			log.Println("TODO: Action for Typescript")
 		}
 	case "javascript":
 		{
-			log.Println("action for javascript")
+			log.Println("TODO: Action for Javascript")
 		}
 	}
 }
@@ -41,15 +41,15 @@ func platformHandler(platform string) {
 	switch platform {
 	case "github":
 		{
-			log.Println("Using configuration for github")
+			log.Println("TODO: Action for GitHub")
 		}
 	case "gitlab":
 		{
-			log.Println("action for gitlab")
+			log.Println("TODO: Action for GitLab")
 		}
 	case "azuredevops":
 		{
-			log.Println("action for azuredevops")
+			log.Println("TODO: Action for Azure DevOps")
 		}
 	}
 }

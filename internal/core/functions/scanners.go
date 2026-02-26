@@ -11,7 +11,7 @@ import (
 	"strings"
 )
 
-func ScanDirectory(path string) {
+func ScanDirectory(path string, lang string, platform string) {
 	log.Println("Scanning directory:", path)
 
 	err := os.Chdir(path)
@@ -21,15 +21,39 @@ func ScanDirectory(path string) {
 
 	configuration := ReadConfigFile()
 	keyValues := ProcessConfigFile(configuration)
-	results := RunScanners(keyValues)
+	results := RunScanners(keyValues, lang, platform)
 	fmt.Println(FormatScanResults(results))
 }
 
-func RunScanners(keyValues []string) []types.CheckResult {
-	var lang string
+func RunScanners(keyValues []string, lang string, platform string) []types.CheckResult {
 	var results []types.CheckResult
 
-	var actions = map[string]types.CheckFunc{
+	actions := buildScannerActions()
+
+	currentLang := lang
+	currentPlatform := platform
+
+	for _, pair := range keyValues {
+		key, value := parseKeyValuePair(pair)
+		if key == "" {
+			continue
+		}
+
+		currentLang = updateLanguageConfig(key, value, currentLang)
+		currentPlatform = updatePlatformConfig(key, value, currentPlatform)
+		processLanguageOrPlatformConfig(key, value)
+
+		if !isActionEnabled(value) {
+			continue
+		}
+
+		results = append(results, executeScannerAction(actions, key, currentLang))
+	}
+	return results
+}
+
+func buildScannerActions() map[string]types.CheckFunc {
+	return map[string]types.CheckFunc{
 		"docker_compose": func(l string) types.CheckResult {
 			return types.CheckResult{Name: "docker_compose", Passed: scannerChecks.DockerComposeExists(constants.CurrentPath).Status == constants.QualityCheckSuccess}
 		},
@@ -100,38 +124,38 @@ func RunScanners(keyValues []string) []types.CheckResult {
 			return types.CheckResult{Name: "dast", Passed: scannerChecks.DASTConfigured(constants.CurrentPath).Status == constants.QualityCheckSuccess}
 		},
 	}
+}
 
-	const emptyAsString = ""
-	for _, pair := range keyValues {
-		key, value := parseKeyValuePair(pair)
-		if key == emptyAsString {
-			continue
-		}
-
-		keyAsString := utils.ToAbsoluteString(value)
-		if key == "langs" {
-			lang = keyAsString
-		}
-		keyLangOrPlatform := key == "langs" || key == "platforms"
-
-		if keyLangOrPlatform {
-			extraLangConfig(keyAsString)
-			extraPlatformConfig(keyAsString)
-		}
-
-		if !isActionEnabled(value) {
-			continue
-		}
-
-		action, exists := actions[key]
-		if !exists {
-			log.Printf("No action found for key '%s'\n", key)
-			results = append(results, types.CheckResult{Name: key, Passed: false})
-			continue
-		}
-		results = append(results, action(lang))
+func updateLanguageConfig(key, value, currentLang string) string {
+	if key == "langs" && currentLang == "" {
+		return utils.ToAbsoluteString(value)
 	}
-	return results
+	return currentLang
+}
+
+func updatePlatformConfig(key, value, currentPlatform string) string {
+	if key == "platforms" && currentPlatform == "" {
+		return utils.ToAbsoluteString(value)
+	}
+	return currentPlatform
+}
+
+func processLanguageOrPlatformConfig(key, value string) {
+	isLangOrPlatform := key == "langs" || key == "platforms"
+	if isLangOrPlatform {
+		keyAsString := utils.ToAbsoluteString(value)
+		extraLangConfig(keyAsString)
+		extraPlatformConfig(keyAsString)
+	}
+}
+
+func executeScannerAction(actions map[string]types.CheckFunc, key, currentLang string) types.CheckResult {
+	action, exists := actions[key]
+	if !exists {
+		log.Printf("No action found for key '%s'\n", key)
+		return types.CheckResult{Name: key, Passed: false}
+	}
+	return action(currentLang)
 }
 
 func isActionEnabled(action string) bool {
