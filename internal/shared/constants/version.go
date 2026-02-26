@@ -1,6 +1,7 @@
 package constants
 
 import (
+	"os"
 	"os/exec"
 	"strings"
 	"sync"
@@ -11,17 +12,27 @@ var (
 	_versionOnce sync.Once
 )
 
-// GetVersion returns the version from git tags
 func GetVersion() string {
 	_versionOnce.Do(func() {
-		_version = getVersionFromGit()
+		_version = os.Getenv("APP_VERSION")
+
+		if _version == "" {
+			_version = getVersionFromGit()
+		}
+
+		if _version == "" {
+			_version = "0.0.0-unknown"
+		}
 	})
 	return _version
 }
 
 func getVersionFromGit() string {
 	cmd := exec.Command("git", "describe", "--tags", "--abbrev=0")
-	output, _ := cmd.Output()
+	output, err := cmd.Output()
+	if err != nil {
+		return ""
+	}
 
 	version := strings.TrimSpace(string(output))
 	version = strings.TrimPrefix(version, "v")
