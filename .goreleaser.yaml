@@ -19,6 +19,9 @@ builds:
   - main: ./cmd/scruticode/main.go
     env:
       - CGO_ENABLED=0
+    ldflags:
+      - -s -w
+      - -X Scrudicode/internal/shared/constants/version=v{{ .Version }}
     goos:
       - linux
       - windows

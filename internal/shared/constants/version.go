@@ -19,10 +19,6 @@ func GetVersion() string {
 		if _version == "" {
 			_version = getVersionFromGit()
 		}
-
-		if _version == "" {
-			_version = "0.0.0-unknown"
-		}
 	})
 	return _version
 }
