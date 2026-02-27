@@ -1,25 +1,16 @@
 package version
 
 import (
-	"os"
 	"os/exec"
 	"strings"
-	"sync"
 )
 
-var (
-	_version     string
-	_versionOnce sync.Once
-)
+var _version string
 
 func GetVersion() string {
-	_versionOnce.Do(func() {
-		_version = os.Getenv("APP_VERSION")
-
-		if _version == "" {
-			_version = getVersionFromGit()
-		}
-	})
+	if _version == "" {
+		_version = getVersionFromGit()
+	}
 	return _version
 }
 
