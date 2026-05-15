@@ -14,6 +14,21 @@ on:
       - '.github/workflows/ci.yml'
 
 jobs:
+
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Run HenKaiPan Security Scan
+        uses: dyallab/henkaipan-action@latest
+        with:
+          api-url: ${{ secrets.HENKAIPAN_API_URL }}
+          api-key: ${{ secrets.HENKAIPAN_API_KEY }}
+          project-id: ${{ secrets.HENKAIPAN_PROJECT_ID }}
+          scanners: "semgrep"
+          fail-on-severity: high
+
   build:
     permissions: 
       contents: read
