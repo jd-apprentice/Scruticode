@@ -29,8 +29,6 @@ jobs:
           scanners: "semgrep"
           fail-on-severity: high
           post-pr-comment: "true"
-          cf-access-client-id: ${{ secrets.CF_CLIENT_ID }}
-          cf-access-client-secret: ${{ secrets.CF_CLIENT_SECRET }}
 
   build:
     permissions: 
