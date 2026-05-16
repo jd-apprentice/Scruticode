@@ -26,7 +26,7 @@ jobs:
           api-url: https://henkaipan.jonathan.com.ar
           api-key: ${{ secrets.HENKAIPAN_API_KEY }}
           project-id: ${{ secrets.HENKAIPAN_PROJECT_ID }}
-          scanners: "semgrep"
+          scanners: "semgrep, trivy"
           fail-on-severity: high
           post-pr-comment: "true"
 
